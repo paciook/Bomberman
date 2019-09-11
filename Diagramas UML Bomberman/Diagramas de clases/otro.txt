@@ -1,0 +1,100 @@
+@startuml
+
+game *-- thing
+
+thing <|-- powerUp
+thing <|-- obstacle
+thing <|-- movingThing
+
+obstacle <|-- bomb
+obstacle <|-- wall
+
+
+movingThing <|-- enemy
+movingThing <|-- bomberman
+
+wall <|-- fixedWall
+
+wall <|-- breakableWall
+
+enemy <|-- balloonEnemy
+enemy <|-- waterEnemy
+
+abstract class game{
+
+}
+abstract class thing{
+  -texture
+  -hitbox
+  -position
+  +getPosition()
+  +setPosition()
+  +getTexture()
+  +setTexture()
+  +getHitbox()
+  +setHitbox()
+  +appear()
+}
+
+class bomberman{
+  -lives
+  -powerUps
+  +getLives()
+  +setLives()
+  +getPowerUps()
+  +setPowerUps()
+}
+
+class bomb{
+  -position
+  -explorionRange
+  -explotionTime
+  -nOfSimultaneousBombs
+  +place()
+  +increaseExplotion()
+  +explode()
+}
+
+abstract class obstacle{
+}
+
+abstract class wall{
+}
+
+class fixedWall{
+  
+}
+
+class breakableWall{
+  +break()
+}
+
+abstract class enemy{
+
+}
+
+class balloonEnemy{
+
+}
+
+class waterEnemy{
+
+}
+
+
+
+abstract class movingThing {
+  -speed
+  -direction
+  -pointTowards()
+  -moveForward()
+  +getSpeed()
+  +setSpeed()
+  +die()
+  }
+
+class powerUp{
+  -powerUpType
+  +consume()
+}
+@enduml

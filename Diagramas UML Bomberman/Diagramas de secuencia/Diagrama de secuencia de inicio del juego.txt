@@ -1,0 +1,10 @@
+@startuml
+User -> Game: initiate()
+Game --> User
+User -> Game: start()
+Game -> Map: create()
+Map -> FixedWall: appear()
+Map -> BreakableWall: appear()
+Map -> BalloonEnemy: appear()
+Map -> Bomberman: appear()
+@enduml
