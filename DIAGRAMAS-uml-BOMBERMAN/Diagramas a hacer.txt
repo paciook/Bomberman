@@ -1,0 +1,5 @@
+- Actividades
+- Clases </
+- Secuencia: Como se comunica cada uno de las clases con el resto del game. Comunicación durante la explosion de una bomba, comunicación cuando muere un enemigo, cuando termina el juego
+- Estados: Estados de cada clase y la transición entre ellos. Ej: Bomberman: Vivo / muerto / caminando / poniendo bomba </
+- Casos de uso

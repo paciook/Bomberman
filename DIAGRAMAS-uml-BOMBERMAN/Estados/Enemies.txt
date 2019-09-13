@@ -1,0 +1,9 @@
+@startuml
+state alive {
+[*] --> appear
+appear --> moving
+}
+appear --> dead
+moving --> dead
+dead --> [*]
+@enduml
