@@ -1,0 +1,19 @@
+@startuml
+
+state alive {
+  [*] --> notMoving
+  notMoving --> walking
+  notMoving --> placingBomb
+  
+  walking --> notMoving
+  walking --> placingBomb
+
+  placingBomb --> notMoving
+  placingBomb -->  walking
+}
+
+placingBomb --> dead
+notMoving --> dead
+walking --> dead
+dead --> [*]
+@enduml
