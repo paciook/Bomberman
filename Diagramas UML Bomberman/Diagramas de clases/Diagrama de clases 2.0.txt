@@ -46,6 +46,7 @@ abstract class Thing{
 class Bomberman{
   -lives
   -powerUps
+  -nOfSimultaneousBombs
   +getLives()
   +setLives()
   +getPowerUps()
@@ -56,13 +57,12 @@ class Bomb{
   -position
   -explorionRange
   -explotionTime
-  -nOfSimultaneousBombs
   +place()
-  +increaseExplotion()
   +explode()
 }
 
 abstract class Obstacle{
+  +appear()
 }
 
 abstract class Wall{
