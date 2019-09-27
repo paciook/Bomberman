@@ -1,13 +1,15 @@
-class Bomberman:
+import thing
+
+class Thorman(thing):
         def __init__(self, nombre, pos=[0,0]):
-        self.posicion_actual = pos
-        self.nombre= nombre
+        self.position = pos
+        self.name= name
         self.step_size = 5
 
     def mover(self,direccion, es_valida):
         print(es_valida)
-        for index,item in enumerate(self.posicion_actual):
-            self.posicion_actual[index] = item+es_valida*self.step_size*direccion[index]
+        for index,item in enumerate(self.position):
+            self.position[index] = item+es_valida*self.step_size*direccion[index]
 
     def get_stepsize(self):
         return self.step_size
@@ -22,5 +24,5 @@ class Bomberman:
             lista_aux.append(item+self.step_size*direccion[index])
         return lista_aux
 
-    def get_posicion(self):
-        return self.posicion_actual
+    def get_position(self):
+        return self.position
