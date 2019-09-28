@@ -1,5 +1,5 @@
 class thing:
-    def __init__(self, position=[0,0]):
+    def __init__(self, position=[0, 0]):
         self.position = position
 
     def getPosition(self):

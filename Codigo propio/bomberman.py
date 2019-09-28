@@ -6,10 +6,9 @@ class Thorman(thing):
         self.name= name
         self.step_size = 5
 
-    def mover(self,direccion, es_valida):
-        print(es_valida)
+    def mover(self,direccion):
         for index,item in enumerate(self.position):
-            self.position[index] = item+es_valida*self.step_size*direccion[index]
+            self.position[index] = item+self.step_size*direccion[index]
 
     def get_stepsize(self):
         return self.step_size
