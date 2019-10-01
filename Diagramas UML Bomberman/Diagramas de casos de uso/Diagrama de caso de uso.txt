@@ -1,0 +1,8 @@
+@startuml
+actor player
+rectangle system{
+  player -> (initiate game)
+  player -> (move)
+  player -> (quit game)
+}
+@enduml

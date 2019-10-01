@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentScriptType="application/ecmascript" contentStyleType="text/css" height="156px" preserveAspectRatio="none" style="width:461px;height:156px;" version="1.1" viewBox="0 0 461 156" width="461px" zoomAndPan="magnify"><defs><filter height="300%" id="f1memdj43cvwg6" width="300%" x="-1" y="-1"><feGaussianBlur result="blurOut" stdDeviation="2.0"/><feColorMatrix in="blurOut" result="blurOut2" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .4 0"/><feOffset dx="4.0" dy="4.0" in="blurOut2" result="blurOut3"/><feBlend in="SourceGraphic" in2="blurOut3" mode="normal"/></filter></defs><g><!--MD5=[8ae77ada6169822435c3d3bcb01b6727]
+cluster system--><rect fill="#FFFFFF" filter="url(#f1memdj43cvwg6)" height="65" style="stroke: #000000; stroke-width: 1.5;" width="376" x="74.5" y="62.5"/><text fill="#000000" font-family="sans-serif" font-size="14" font-weight="bold" lengthAdjust="spacingAndGlyphs" textLength="57" x="234" y="77.4951">system</text><ellipse cx="379.466" cy="104.4932" fill="#FEFECE" filter="url(#f1memdj43cvwg6)" rx="62.966" ry="14.9932" style="stroke: #A80036; stroke-width: 1.5;"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacingAndGlyphs" textLength="88" x="335.466" y="109.1416">initiate game</text><ellipse cx="251.3701" cy="104.5236" fill="#FEFECE" filter="url(#f1memdj43cvwg6)" rx="29.8701" ry="14.5236" style="stroke: #A80036; stroke-width: 1.5;"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacingAndGlyphs" textLength="38" x="232.3701" y="109.1721">move</text><ellipse cx="134.2904" cy="104.5236" fill="#FEFECE" filter="url(#f1memdj43cvwg6)" rx="51.7904" ry="14.5236" style="stroke: #A80036; stroke-width: 1.5;"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacingAndGlyphs" textLength="69" x="99.7904" y="109.1721">quit game</text><!--MD5=[d8eca564858595245321772129d300af]
+entity player--><ellipse cx="26.5" cy="73" fill="#FEFECE" filter="url(#f1memdj43cvwg6)" rx="8" ry="8" style="stroke: #A80036; stroke-width: 2.0;"/><path d="M26.5,81 L26.5,108 M13.5,89 L39.5,89 M26.5,108 L13.5,123 M26.5,108 L39.5,123 " fill="none" filter="url(#f1memdj43cvwg6)" style="stroke: #A80036; stroke-width: 2.0;"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacingAndGlyphs" textLength="41" x="6" y="142.9951">player</text><!--MD5=[fcae9e11140fb2970d3b3d4c9d73d959]
+link player to initiate game--><path d="M47.1175,66.5025 C56.4712,53.2036 68.8641,39.7826 84,32.5 C163.2985,-5.6542 198.4131,4.9821 282,32.5 C313.7746,42.9606 343.6853,68.1955 361.7934,85.8208 " fill="none" id="player-&gt;initiate game" style="stroke: #A80036; stroke-width: 1.0;"/><polygon fill="#A80036" points="365.6951,89.6796,362.1087,80.5069,362.14,86.1637,356.4833,86.195,365.6951,89.6796" style="stroke: #A80036; stroke-width: 1.0;"/><!--MD5=[cb6b78f2392ab9e159e2a067f7bd1b06]
+link player to move--><path d="M47.1175,66.5025 C56.4712,53.2036 68.8641,39.7826 84,32.5 C125.2513,12.6521 145.2035,13.8276 187,32.5 C211.2302,43.3247 230.1368,68.2488 241.0513,85.7235 " fill="none" id="player-&gt;move" style="stroke: #A80036; stroke-width: 1.0;"/><polygon fill="#A80036" points="243.9156,90.4368,242.6598,80.6683,241.3189,86.164,235.8233,84.8231,243.9156,90.4368" style="stroke: #A80036; stroke-width: 1.0;"/><!--MD5=[7ee145fff31d57382ff80b8652832c54]
+link player to quit game--><path d="M47.1719,104.5 C57.1454,104.5 67.1188,104.5 77.0923,104.5 " fill="none" id="player-&gt;quit game" style="stroke: #A80036; stroke-width: 1.0;"/><polygon fill="#A80036" points="82.3078,104.5,73.3078,100.5,77.3078,104.5,73.3078,108.5,82.3078,104.5" style="stroke: #A80036; stroke-width: 1.0;"/><!--MD5=[ab4f15b0f1516a7c9ad461711527b9e3]
+@startuml
+actor player
+rectangle system{
+  player -> (initiate game)
+  player -> (move)
+  player -> (quit game)
+}
+@enduml
+
+PlantUML version 1.2019.10(Fri Sep 13 20:53:03 UTC 2019)
+(GPL source distribution)
+Java Runtime: OpenJDK Runtime Environment
+JVM: OpenJDK 64-Bit Server VM
+Java Version: 1.8.0_222-heroku-b10
+Operating System: Linux
+Default Encoding: UTF-8
+Language: en
+Country: US
+--></g></svg>
