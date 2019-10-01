@@ -1,13 +1,13 @@
 import time
 
 
-class Bomba:
+class Bomb:
     def __init__(self, position, explotionRange):
         self.explotionTime = 2  # segundos
 
-        self.plantar(position, explotionRange)
+        self.plant(position, explotionRange)
 
-    def plantar(self, position, explotionRange, explotionTime):
+    def plant(self, position, explotionRange, explotionTime):
 
         self.setPosition(position)
         self.setExplotionRange(explotionRange)
@@ -36,4 +36,4 @@ class Bomba:
         return self.explotionTime
 
     def explode():
-        
+        pass
