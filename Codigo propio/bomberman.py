@@ -1,7 +1,7 @@
 import thing
 
 class Thorman(thing):
-        def __init__(self, nombre, pos=[0,0]):
+    def __init__(self, nombre, pos=[0,0]):
         self.position = pos
         self.name= name
         self.step_size = 5
