@@ -7,6 +7,7 @@ class Game():
         self.name = playerName
         self.dimentions = dimentions
         self.thorman = thorman.thorman(self.nombre)
+        self.lista_de_bombas_activas = []
 
     def positionIsValid(self, direction):
         newPosition = self.thorman.get_nueva_posicion_tentativa(direccion)
@@ -20,3 +21,9 @@ class Game():
 
     def getThormanPosition(self):
         return self.bomberman.get_posicion()
+
+    def poner_bomba(self):
+        self.lista_de_bombas_activas.append(thorman.poner_bomba())
+    
+    def get_bombas(self):
+        return self.lista_de_bombas_activas

@@ -23,6 +23,8 @@ class Controler:
                     # print(pygame.event.event_name(event.type))
                     # print(event.key)
                     self.game.moveThor(CONTROLS[str(event.key)])
+                    if str(event.key)=='32':
+                        game.poner_bomba()
 
                     self.visual.reloadBackground()
 
@@ -30,8 +32,8 @@ class Controler:
                 pygame.display.flip()
 
     def loadImages(self):
-        self.visual.loadBackgroundImage('/home/fran/Documents/Objetos/poo-bomberman/Codigo propio/grasstexture.jpg')
-        self.visual.loadThormanImage('/home/fran/Documents/Objetos/poo-bomberman/Codigo propio/bmsprite.png', (2,2))
+        self.visual.loadBackgroundImage('grasstexture.jpg')
+        self.visual.loadThormanImage('bmsprite.png', (2, 2))
         return None
 
 if __name__ == "__main__":

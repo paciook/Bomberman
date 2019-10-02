@@ -3,6 +3,15 @@ class Bomberman:
         self.posicion_actual = pos
         self.nombre= nombre
         self.step_size = 100 # velocidad
+        self.alto = 20
+        self.ancho = 20
+
+    def colisionaCon(self, unObjeto):
+        posicionDelOtroObjeto = unObjeto.getPosicion()
+        altoDelOtroObjeto = unObjeto.getAlto()
+        anchoDelOtroObjeto = unObjeto.getAncho()
+        Elmetodoparacalcularaversinomechococontraelcositoquemedan()
+
 
     def mover(self,direccion, es_valida): #es_valida es 0 o 1. Si es valida, es 1
         print('es_valida',es_valida)
@@ -13,9 +22,9 @@ class Bomberman:
         return self.step_size
     
     def get_nueva_posicion_tentativa(self, direccion):
-        print('direccion',direccion)
+        print('direccion', direccion)
         lista_aux = []
-        for index,item in enumerate(self.posicion_actual):
+        for index, item in enumerate(self.posicion_actual):
             lista_aux.append(item+self.step_size*direccion[index])
         return lista_aux
 
