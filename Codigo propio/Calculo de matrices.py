@@ -20,9 +20,12 @@ def arrayOf(pathOfFile):
             
             if (aux != 0):
                 width.append(1)
+                print(1, end='')
             else:
                 width.append(0)
+                print(' ', end='')
         array.append(width)
+        print('/t')
     return array
 
 if __name__ == "__main__":
