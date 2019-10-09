@@ -32,8 +32,8 @@ class Controler():
                 pygame.display.flip()
 
     def loadImages(self):
-        self.visual.loadBackgroundImage('grasstexture.jpg')
-        self.visual.loadThormanImage('bmsprite.png', (2, 2))
+        self.visual.loadBackgroundImage('../assets/grasstexture.jpg')
+        self.visual.loadThormanImage('../assets/bmsprite.png', (2, 2))
         return None
 
 if __name__ == "__main__":

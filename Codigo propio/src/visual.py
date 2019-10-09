@@ -12,7 +12,7 @@ class Visual():
         self.background = None
         self.screen = pygame.display.set_mode(dimentions)
         self.thorman = None
-        self.bomba = pygame.image.load('sprite.png')
+ #       self.bomba = pygame.image.load('../assets/sprite.png')
 
         pygame.key.set_repeat(20) # para que procese eventos cuando se mantiene una tecla apretada
 
