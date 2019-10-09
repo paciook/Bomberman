@@ -1,5 +1,5 @@
-import thing
-import bomb
+from thing import thing
+from bomb import Bomb
 
 
 class Thorman(thing):
@@ -22,12 +22,9 @@ class Thorman(thing):
     def getNewTentativePosition(self, direction):
         print('direction', direction)
         auxList = []
-        for index, item in enumerate(self.actualPosition):
-            auxList.append(item+self.stepSize*direction[index])
+        for index, item in enumerate(self.position):
+            auxList.append(item+self.stepSize * direction[index])
         return auxList
-
-    def getPosition(self):
-        return self.position
     
     def poner_bomba(self):
         labomba = bomb.Bomb(self.position, 1)

@@ -31,8 +31,8 @@ class Controlador:
                 pygame.display.flip()
 
     def cargar_imagenes(self):
-        self.vista.carga_imagen_fondo('/home/fran/Documents/Objetos/poo-bomberman/Código/grasstexture.jpg')
-        self.vista.cargar_imagen_bomberman('/home/fran/Documents/Objetos/poo-bomberman/Código/bmsprite.png', (2,2))
+        self.vista.carga_imagen_fondo('grasstexture.jpg')
+        self.vista.cargar_imagen_bomberman('bmsprite.png', (2,2))
         return None
 
 if __name__=="__main__":
