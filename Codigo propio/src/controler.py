@@ -22,14 +22,17 @@ class Controler():
                 if event.type == pygame.KEYDOWN:  # alguien presionó una tecla
                     # print(pygame.event.event_name(event.type))
                     # print(event.key)
-                    self.game.moveThorman(CONTROLS[str(event.key)])
                     if str(event.key)=='32':
-                        game.poner_bomba()
+                        self.game.plantBomb()
+                    else:
+                        self.game.moveThorman(CONTROLS[str(event.key)])
+                    
 
                     self.visual.reloadBackground()
 
                     self.visual.reloadThorman()
-                pygame.display.flip()
+            self.visual.drawBombs('../assets/bmsprite.png')
+            pygame.display.flip()
 
     def loadImages(self):
         self.visual.loadBackgroundImage('../assets/grasstexture.jpg')

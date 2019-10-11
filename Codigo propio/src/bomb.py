@@ -3,37 +3,27 @@ import time
 
 class Bomb:
     def __init__(self, position, explotionRange):
-        self.explotionTime = 2  # segundos
+        self.explotionTime = 4  # seconds
+        self.explotionRange = explotionRange
+        self.position = position
 
-        self.plant(position, explotionRange)
-
-    def plant(self, position, explotionRange, explotionTime):
-
-        self.setPosition(position)
-        self.setExplotionRange(explotionRange)
-        self.setExplotionTime(explotionTime)
-
-        time.sleep(self.getExplotionTime())
-
-        self.explode()
-
-    def setPosition(pos):
+    def setPosition(self, pos):
         self.position = pos
 
-    def getPosition():
+    def getPosition(self):
         return self.position
 
-    def setExplotionRange(exprng):
+    def setExplotionRange(self, exprng):
         self.explotionRange = exprng
 
-    def getExplotionRange():
+    def getExplotionRange(self,):
         return self.explotionRange
 
-    def setExplotionTime(exptm):
+    def setExplotionTime(self, exptm):
         self.explotionTime = exptm
 
-    def getExplotionTime():
+    def getExplotionTime(self):
         return self.explotionTime
 
-    def explode():
+    def explode(self,):
         pass

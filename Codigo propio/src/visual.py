@@ -31,6 +31,7 @@ class Visual():
     def reloadThorman(self):
         self.screen.blit(self.thorman, self.game.getThormanPosition()) 
     
-    def dibujar_bombas(self):
-        for bomba in game.get_bombas():
-            self.screen.blit(self.bomba, bomba.getPosition())
+    def drawBombs(self, sprite):
+        self.bomb = pygame.image.load(sprite)
+        for eachBomb in self.game.getBombs():
+            self.screen.blit(self.bomb, eachBomb.getPosition())

@@ -26,6 +26,6 @@ class Thorman(thing):
             auxList.append(item+self.stepSize * direction[index])
         return auxList
     
-    def poner_bomba(self):
-        labomba = bomb.Bomb(self.position, 1)
-        return labomba
+    def plantBomb(self):
+        theBomb = Bomb(self.position, 1)
+        return theBomb
