@@ -11,21 +11,21 @@ class Thorman(thing):
 
     def move(self, direction):
         for index, item in enumerate(self.position):
-            self.position[index] = item+self.stepSize*direction[index]
+            self.position[index] = item + self.stepSize*direction[index]
 
     def getStepsize(self):
         return self.stepSize
-    
+
     def setStepsize(self, NewStep):
         self.stepSize = NewStep
-    
+
     def getNewTentativePosition(self, direction):
         print('direction', direction)
         auxList = []
         for index, item in enumerate(self.position):
             auxList.append(item+self.stepSize * direction[index])
         return auxList
-    
+
     def plantBomb(self):
-        theBomb = Bomb(self.position, 1)
+        theBomb = Bomb(self.position)
         return theBomb

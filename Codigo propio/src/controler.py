@@ -1,13 +1,13 @@
 from visual import Visual
 import game
 import pygame
-
-CONTROLS = {'273': [0, -1], '274': [0, 1], '275': [1, 0], '276': [-1, 0]}
+from pydispatch import dispatcher
+CONTROLS = {'273': [0, -1], '274': [0, 1], '275': [1, 0], '276': [-1, 0], '32': [0, 0]}
 
 
 class Controler():
     def __init__(self):
-        self.dimentions = (640, 480)
+        self.dimentions = (1200, 700)  # (640, 480)
         self.game = game.Game('Fede', self.dimentions)
         self.visual = Visual(self.dimentions, self.game)
         self.loadImages()
@@ -22,22 +22,22 @@ class Controler():
                 if event.type == pygame.KEYDOWN:  # alguien presionó una tecla
                     # print(pygame.event.event_name(event.type))
                     # print(event.key)
-                    if str(event.key)=='32':
-                        self.game.plantBomb()
-                    else:
+                    try:
                         self.game.moveThorman(CONTROLS[str(event.key)])
-                    
-
-                    self.visual.reloadBackground()
-
-                    self.visual.reloadThorman()
-            self.visual.drawBombs('../assets/bmsprite.png')
+                        #self.game.plantBomb(CONTROLS[str(event.key)])
+                        self.visual.reloadBackground()
+                        self.visual.reloadThorman(str(event.key))
+                    except Exception:
+                        pass
+                
+            # self.visual.drawBombs('../assets/bmsprite.png')
             pygame.display.flip()
-
+            
     def loadImages(self):
-        self.visual.loadBackgroundImage('../assets/grasstexture.jpg')
-        self.visual.loadThormanImage('../assets/bmsprite.png', (2, 2))
+        self.visual.loadBackgroundImage('../assets/Wallpaper.jpg')
+        self.visual.loadThormanImage('../assets/Thorman/ThormanRight1.png', (2, 2))
         return None
+
 
 if __name__ == "__main__":
     controler = Controler()

@@ -2,7 +2,7 @@ import time
 
 
 class Bomb:
-    def __init__(self, position, explotionRange):
+    def __init__(self, position):
         self.explotionTime = 4  # seconds
         self.explotionRange = explotionRange
         self.position = position

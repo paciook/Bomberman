@@ -1,6 +1,0 @@
-@startuml
-[*] --> appearing
-appearing --> waitingToExplode
-waitingToExplode --> explode
-explode --> [*]
-@enduml

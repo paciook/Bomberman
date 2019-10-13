@@ -22,8 +22,8 @@ class Game():
     def getThormanPosition(self):
         return self.thorman.getPosition()
 
-    def plantBomb(self):
+    def plantBomb(self, plantBomb):
         self.activeBombList.append(self.thorman.plantBomb())
     
     def getBombs(self):
-        return self.activeBombList
+        return self.activeBombList()
