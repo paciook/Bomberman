@@ -2,7 +2,8 @@ from visual import Visual
 import game
 import pygame
 from pydispatch import dispatcher
-CONTROLS = {'273': [0, -1], '274': [0, 1], '275': [1, 0], '276': [-1, 0], '32': [0, 0]}
+CONTROLS = {'273': [0, -1], '274': [0, 1], '275': [1, 0],
+            '276': [-1, 0], '32': [0, 0]}
 
 
 class Controler():
@@ -10,6 +11,7 @@ class Controler():
         self.dimentions = (1200, 700)  # (640, 480)
         self.game = game.Game('Fede', self.dimentions)
         self.visual = Visual(self.dimentions, self.game)
+        
         self.loadImages()
         self.mainLoop()
 
@@ -24,18 +26,20 @@ class Controler():
                     # print(event.key)
                     try:
                         self.game.moveThorman(CONTROLS[str(event.key)])
-                        #self.game.plantBomb(CONTROLS[str(event.key)])
+                        # self.game.plantBomb(CONTROLS[str(event.key)])
                         self.visual.reloadBackground()
+                        self.visual.loadLimit(self.dimentions)
                         self.visual.reloadThorman(str(event.key))
                     except Exception:
                         pass
-                
+
             # self.visual.drawBombs('../assets/bmsprite.png')
             pygame.display.flip()
-            
+
     def loadImages(self):
         self.visual.loadBackgroundImage('../assets/Wallpaper.jpg')
-        self.visual.loadThormanImage('../assets/Thorman/ThormanRight1.png', (2, 2))
+        self.visual.loadThormanImage('../assets/Thorman/ThormanRight1.png',
+                                     (2, 2))
         return None
 
 
