@@ -8,10 +8,9 @@ CONTROLS = {'273': [0, -1], '274': [0, 1], '275': [1, 0],
 
 class Controler():
     def __init__(self):
-        self.dimentions = (1200, 700)  # (640, 480)
+        self.dimentions = (1200, 600)  # (640, 480)
         self.game = game.Game('Fede', self.dimentions)
         self.visual = Visual(self.dimentions, self.game)
-        
         self.loadImages()
         self.mainLoop()
 
@@ -40,6 +39,7 @@ class Controler():
         self.visual.loadBackgroundImage('../assets/Wallpaper.jpg')
         self.visual.loadThormanImage('../assets/Thorman/ThormanRight1.png',
                                      (2, 2))
+        self.visual.loadLimit(self.dimentions)
         return None
 
 

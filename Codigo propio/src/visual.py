@@ -1,4 +1,5 @@
 import pygame
+from PIL import Image
 from pygame.locals import *
 import thorman
 import threading
@@ -17,7 +18,9 @@ class Visual():
         self.screen = pygame.display.set_mode(dimentions)
         self.thorman = None
         self.spriteNumber = 0
-        self.FixedWall = pygame.image.load("../assets/Wall Hard.jpg")
+        self.fixedWall = pygame.image.load("../assets/Wall Hard.jpg")
+        fixedWallSize = Image.open("../assets/Wall Hard.jpg")
+        self.fixedWallSize = fixedWallSize.size
         dispatcher.connect(self.finallyChangeSprite, signal="Change Sprite", sender="changeThormanSprite")
 
 
@@ -54,13 +57,17 @@ class Visual():
         changeThormanSpriteThread.start()
 
     def loadLimit(self, dimension):
+        print(self.fixedWallSize)
+        wallQuantity = 30
+        wallWidth = int(dimension[0]/wallQuantity)
+        self.fixedWall = pygame.transform.scale(self.fixedWall, (wallWidth, wallWidth))
+        for ancho in range(wallQuantity):
+            self.screen.blit(self.fixedWall, [ancho * wallWidth, 0])
+            self.screen.blit(self.fixedWall, [ancho * wallWidth, dimension[1] - 40])
         
-        for ancho in range(int(dimension[0]/64)):
-            self.screen.blit(self.FixedWall, [ancho, 0])
-            self.screen.blit(self.FixedWall, [ancho, dimension[1]-225])
-        for alto in range(int(dimension[1]/64) - 2):
-            self.screen.blit(self.FixedWall, [0, alto + 225])
-            self.screen.blit(self.FixedWall, [dimension[0] - 225, alto + 225])        
+        for alto in range((wallWidth) - 1):
+            self.screen.blit(self.fixedWall, [0, alto * wallWidth])
+            self.screen.blit(self.fixedWall, [dimension[0] - wallWidth, alto * wallWidth])        
     # def reloadThorman(self):
     # self.screen.blit(self.thorman, self.game.getThormanPosition())
 
