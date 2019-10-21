@@ -3,8 +3,8 @@ import time
 
 class Bomb:
     def __init__(self, position):
-        self.explotionTime = 4  # seconds
-        self.explotionRange = explotionRange
+        self.explotionTime = 0  # seconds
+        self.explotionRange = 3
         self.position = position
 
     def setPosition(self, pos):
@@ -27,3 +27,9 @@ class Bomb:
 
     def explode(self,):
         pass
+
+    def getTime(self):
+        return self.explotionTime
+
+    def setTime(self, explotionTime):
+        self.explotionTime += explotionTime

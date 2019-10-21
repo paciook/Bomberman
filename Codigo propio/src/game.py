@@ -8,6 +8,7 @@ class Game():
         self.dimentions = dimentions
         self.thorman = Thorman(self.name)
         self.activeBombList = []
+        self.availableBombs = 1
 
     def positionIsValid(self, direction):
         newPos = self.thorman.getNewTentativePosition(direction)
@@ -22,8 +23,15 @@ class Game():
     def getThormanPosition(self):
         return self.thorman.getPosition()
 
-    def plantBomb(self, plantBomb):
+    def plantBomb(self):
         self.activeBombList.append(self.thorman.plantBomb())
     
     def getBombs(self):
-        return self.activeBombList()
+        return self.activeBombList
+    
+    def removeBombs(self):
+        del self.activeBombList[0]
+        self.availableBombs += 1
+
+    def getAvailableBombs(self):
+        return self.availableBombs
