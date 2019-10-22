@@ -7,7 +7,6 @@ class Thorman(thing):
         self.position = pos
         self.name = name
         self.stepSize = 5
-        self.cantidad_de_bombas_disponibles = 2
 
     def move(self, direction):
         for index, item in enumerate(self.position):

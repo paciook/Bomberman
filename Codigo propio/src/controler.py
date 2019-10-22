@@ -16,6 +16,8 @@ class Controler():
         self.loadImages()
         self.mainLoop()
 
+        
+
     def mainLoop(self):
         while True:
             for event in pygame.event.get():
@@ -25,7 +27,7 @@ class Controler():
                 if event.type == pygame.KEYDOWN:  # alguien presionó una tecla
                     # print(pygame.event.event_name(event.type))
                     # print(event.key)
-                    
+
                         if str(event.key) == '32':
                             if self.game.getAvailableBombs != 0:
                                 self.game.plantBomb()
@@ -36,7 +38,7 @@ class Controler():
                             self.visual.reloadBackground()
                             self.visual.loadLimit(self.dimentions)
                             self.visual.reloadThormanThread(str(event.key))
-                    
+
 
             # self.visual.drawBombs('../assets/bmsprite.png')
             pygame.display.flip()
@@ -57,7 +59,7 @@ class Controler():
             time.sleep(1)
             if eachBomb.getTime() >= 3:
                 dispatcher.send(signal = 'Explode bomb', sender = 'Controler')
-                self.game.removeBomb()
+                self.game.removeBombs()
             else:
                 eachBomb.setTime(1)
                 dispatcher.send(signal = 'Change bomb sprite', sender = 'Controler')

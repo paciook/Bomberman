@@ -18,8 +18,8 @@ class Visual():
         self.screen = pygame.display.set_mode(dimentions)
         self.thorman = None
         self.spriteNumber = 0
-        self.fixedWall = pygame.image.load("../assets/Wall Hard.jpg")
-        fixedWallSize = Image.open("../assets/Wall Hard.jpg")
+        self.fixedWall = pygame.image.load("../assets/Wall hard.jpg")
+        fixedWallSize = Image.open("../assets/Wall hard.jpg")
         self.fixedWallSize = fixedWallSize.size
         
         dispatcher.connect(receiver = self.drawExplotionThread, signal = 'Explode bomb', sender = 'Controler' )
@@ -44,7 +44,7 @@ class Visual():
         if self.spriteNumber == 4:
             self.spriteNumber = 1
         self.thorman = pygame.image.load("../assets/Thorman/Thorman" + str(DIRECTIONS[direction]) + str(self.spriteNumber) + ".png")
-        time.sleep(0.04)
+        # time.sleep(0.004)
         self.screen.blit(self.thorman, self.game.getThormanPosition())
 
     def reloadThormanThread(self, direction):
@@ -52,7 +52,6 @@ class Visual():
         reloadThormanThread.start()
 
     def loadLimit(self, dimension):
-        print(self.fixedWallSize)
         wallQuantity = 30
         wallWidth = int(dimension[0]/wallQuantity)
         self.fixedWall = pygame.transform.scale(self.fixedWall, (wallWidth, wallWidth))
@@ -68,8 +67,8 @@ class Visual():
     def drawExplotionThread(self):
         pass
     
-    def reloadBomb():
-        self.bomb = pygame.image.load('../assets/Thorman/ThormanRight1.png')
+    def reloadBomb(self):
+        self.bomb = pygame.image.load('../assets/Mjolnir.png')
         for eachBomb in self.game.getBombs():
             self.screen.blit(self.bomb, eachBomb.getPosition())
 
