@@ -38,6 +38,7 @@ class Visual():
     def loadThormanImage(self, sprite, pos):
         self.thorman = pygame.image.load(sprite)
         self.screen.blit(self.thorman, pos)
+        
 
     def reloadThorman(self, direction):
         self.spriteNumber = self.spriteNumber + 1

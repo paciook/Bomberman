@@ -4,6 +4,7 @@ import game
 import pygame
 import threading
 from pydispatch import dispatcher
+import Calculate Collisions as colls
 CONTROLS = {'273': [0, -1], '274': [0, 1], '275': [1, 0],
             '276': [-1, 0], '32': [0, 0]}
 
@@ -11,15 +12,19 @@ CONTROLS = {'273': [0, -1], '274': [0, 1], '275': [1, 0],
 class Controler():
     def __init__(self):
         self.dimentions = (1200, 600)  # (640, 480)
-        self.game = game.Game('Fede', self.dimentions)
+        self.game = game.Game('Fran', self.dimentions)
         self.visual = Visual(self.dimentions, self.game)
         self.loadImages()
+        self.mapArray = []
+        self.collisions = []
+        self.activeObjects = []
         self.mainLoop()
 
         
 
     def mainLoop(self):
         while True:
+            self.mapArray = colls.arrayOf(border)
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     sys.exit()
@@ -38,6 +43,10 @@ class Controler():
                             self.visual.reloadBackground()
                             self.visual.loadLimit(self.dimentions)
                             self.visual.reloadThormanThread(str(event.key))
+            
+            for item in self.activeObjects:
+                colls.placeObject(item)
+            colls.verifyColls()
 
 
             # self.visual.drawBombs('../assets/bmsprite.png')
@@ -63,6 +72,16 @@ class Controler():
             else:
                 eachBomb.setTime(1)
                 dispatcher.send(signal = 'Change bomb sprite', sender = 'Controler')
+
+    def addCollision(coll):
+        self.collisions.append(coll)
+
+    def getMapArray(self):
+        return self.mapArray
+
+    def setMapArray(self, mapArray):
+        self.mapArray = mapArray
+
 
 if __name__ == "__main__":
     controler = Controler()
