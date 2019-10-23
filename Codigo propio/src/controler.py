@@ -1,4 +1,6 @@
 from visual import Visual
+import thormanSpritesThread
+import bombsThread
 import time
 import game
 import pygame
@@ -13,10 +15,24 @@ class Controler():
         self.dimentions = (1200, 600)  # (640, 480)
         self.game = game.Game('Fede', self.dimentions)
         self.visual = Visual(self.dimentions, self.game)
+        self.bombsThread = None
         self.loadImages()
         self.mainLoop()
+        dispatcher.connect(receiver = reloadBombs, signal='Decrease bomb time', sender = 'Controler')
 
-        
+    def explodeBomb(self, bomb):
+        self.explotarviolento()
+        self.activeBombList.pop(bomb)
+
+    def reloadBombs(self, bomb):
+        bombsList = self.game.getBombs()
+        for eachBomb in bombsList:
+            if eachBomb.getTime() >= 3:
+                self.visual.explodeBomb[bomb]
+                self.game.removeBombs()
+            else:
+                eachBomb.setTime(1)
+            
 
     def mainLoop(self):
         while True:
@@ -51,18 +67,9 @@ class Controler():
         return None
 
     def reloadBombsThread(self):
-        drawBombThread = threading.Thread(target=self.reloadBombs(), daemon=True)
-        drawBombThread.start()
-
-    def reloadBombs(self):
-        for eachBomb in self.game.getBombs():
-            time.sleep(1)
-            if eachBomb.getTime() >= 3:
-                dispatcher.send(signal = 'Explode bomb', sender = 'Controler')
-                self.game.removeBombs()
-            else:
-                eachBomb.setTime(1)
-                dispatcher.send(signal = 'Change bomb sprite', sender = 'Controler')
+        self.bombsThread = bombsThread.bombTimeCounter(self.game.getBombs())
+        BombsThread = threading.Thread(target=self.bombsThread.reloadBombs(), daemon=True)
+        BombsThread.start()
 
 if __name__ == "__main__":
     controler = Controler()
