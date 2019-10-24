@@ -1,12 +1,16 @@
 from visual import Visual
 import thormanSpritesThread
-import bombsThread
+import bombsThreadLogic
 import time
 import game
 import pygame
 import threading
 from pydispatch import dispatcher
+<<<<<<< HEAD
 #import Calculate Collisions as colls
+=======
+# import Calculate Collisions as colls
+>>>>>>> 8de1cfa491ea63d10d356633a8825d186a4233fd
 CONTROLS = {'273': [0, -1], '274': [0, 1], '275': [1, 0],
             '276': [-1, 0], '32': [0, 0]}
 
@@ -22,21 +26,7 @@ class Controler():
         self.collisions = []
         self.activeObjects = []
         self.mainLoop()
-        dispatcher.connect(receiver = reloadBombs, signal='Decrease bomb time', sender = 'Controler')
-
-    def explodeBomb(self, bomb):
-        self.explotarviolento()
-        self.activeBombList.pop(bomb)
-
-    def reloadBombs(self, bomb):
-        bombsList = self.game.getBombs()
-        for eachBomb in bombsList:
-            if eachBomb.getTime() >= 3:
-                self.visual.explodeBomb[bomb]
-                self.game.removeBombs()
-            else:
-                eachBomb.setTime(1)
-            
+        dispatcher.connect(receiver = self.explodeBomb, signal='Exploded', sender = 'bombsThread')
 
     def mainLoop(self):
         while True:
@@ -59,7 +49,11 @@ class Controler():
                             self.visual.reloadBackground()
                             self.visual.loadLimit(self.dimentions)
                             self.visual.reloadThormanThread(str(event.key))
+<<<<<<< HEAD
             
+=======
+            self.visual.reloadBombs()
+>>>>>>> 8de1cfa491ea63d10d356633a8825d186a4233fd
             # for item in self.activeObjects:
             #     colls.placeObject(item)
             # colls.verifyColls()
@@ -76,12 +70,15 @@ class Controler():
         return None
 
     def reloadBombsThread(self):
-        self.bombsThread = bombsThread.bombTimeCounter(self.game.getBombs())
-        BombsThread = threading.Thread(target=self.bombsThread.reloadBombs(), daemon=True)
+        self.bombsThreadLogic = bombsThreadLogic.bombTimeCounter(self.game.getBombs())
+        BombsThread = threading.Thread(target=self.bombsThreadLogic.reloadBombs(), daemon=True)
         BombsThread.start()
 
-    def addCollision(coll):
-        self.collisions.append(coll)
+    def explodeBomb(self, bomb):
+        self.game.removeBombs()
+
+    # def addCollision(coll):
+    #     self.collisions.append(coll)
 
     def getMapArray(self):
         return self.mapArray
