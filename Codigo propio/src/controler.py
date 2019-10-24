@@ -1,12 +1,12 @@
 from visual import Visual
 import thormanSpritesThread
-import bombsThread
+import bombsThreadLogic
 import time
 import game
 import pygame
 import threading
 from pydispatch import dispatcher
-import Calculate Collisions as colls
+# import Calculate Collisions as colls
 CONTROLS = {'273': [0, -1], '274': [0, 1], '275': [1, 0],
             '276': [-1, 0], '32': [0, 0]}
 
@@ -22,25 +22,11 @@ class Controler():
         self.collisions = []
         self.activeObjects = []
         self.mainLoop()
-        dispatcher.connect(receiver = reloadBombs, signal='Decrease bomb time', sender = 'Controler')
-
-    def explodeBomb(self, bomb):
-        self.explotarviolento()
-        self.activeBombList.pop(bomb)
-
-    def reloadBombs(self, bomb):
-        bombsList = self.game.getBombs()
-        for eachBomb in bombsList:
-            if eachBomb.getTime() >= 3:
-                self.visual.explodeBomb[bomb]
-                self.game.removeBombs()
-            else:
-                eachBomb.setTime(1)
-            
+        dispatcher.connect(receiver = self.explodeBomb, signal='Exploded', sender = 'bombsThread')
 
     def mainLoop(self):
         while True:
-            self.mapArray = colls.arrayOf(border)
+            # self.mapArray = colls.arrayOf(border)
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     sys.exit()
@@ -59,10 +45,10 @@ class Controler():
                             self.visual.reloadBackground()
                             self.visual.loadLimit(self.dimentions)
                             self.visual.reloadThormanThread(str(event.key))
-            
-            for item in self.activeObjects:
-                colls.placeObject(item)
-            colls.verifyColls()
+            self.visual.reloadBombs()
+            # for item in self.activeObjects:
+            #     colls.placeObject(item)
+            # colls.verifyColls()
 
 
             # self.visual.drawBombs('../assets/bmsprite.png')
@@ -76,12 +62,15 @@ class Controler():
         return None
 
     def reloadBombsThread(self):
-        self.bombsThread = bombsThread.bombTimeCounter(self.game.getBombs())
-        BombsThread = threading.Thread(target=self.bombsThread.reloadBombs(), daemon=True)
+        self.bombsThreadLogic = bombsThreadLogic.bombTimeCounter(self.game.getBombs())
+        BombsThread = threading.Thread(target=self.bombsThreadLogic.reloadBombs(), daemon=True)
         BombsThread.start()
 
-    def addCollision(coll):
-        self.collisions.append(coll)
+    def explodeBomb(self, bomb):
+        self.game.removeBombs()
+
+    # def addCollision(coll):
+    #     self.collisions.append(coll)
 
     def getMapArray(self):
         return self.mapArray

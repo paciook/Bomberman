@@ -9,8 +9,7 @@ class Game():
         self.thorman = Thorman(self.name)
         self.activeBombList = []
         self.availableBombs = 1
-        
-    
+
     def positionIsValid(self, direction):
         newPos = self.thorman.getNewTentativePosition(direction)
         print('newPos', newPos)
@@ -29,9 +28,9 @@ class Game():
 
     def getBombs(self):
         return self.activeBombList
-    
+
     def removeBombs(self):
-        del self.activeBombList[0]
+        self.activeBombList.pop()
         self.availableBombs += 1
 
     def getAvailableBombs(self):

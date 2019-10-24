@@ -23,9 +23,9 @@ class Visual():
         fixedWallSize = Image.open("../assets/Wall hard.jpg")
         self.fixedWallSize = fixedWallSize.size
         self.spriteNumber = 0
-        
-        dispatcher.connect(receiver = self.drawExplotionThread, signal = 'Explode bomb', sender = 'Controler' )
-        dispatcher.connect(receiver = self.reloadBomb, signal = 'Change bomb sprite', sender = 'Controler' )
+        self.explotion = pygame.image.load("../assets/grasstexture.jpg")
+        self.bombsThreadVisual = None
+        dispatcher.connect(receiver = self.reloadBombs, signal='Exploded', sender = 'bombsThread')
         dispatcher.connect(receiver = self.changeThormanSprite, signal = 'Change thorman sprite', sender = 'thormanSpritesThread' )
 
         pygame.key.set_repeat(20)
@@ -70,11 +70,12 @@ class Visual():
     # self.screen.blit(self.thorman, self.game.getThormanPosition())
     
     def drawExplotionThread(self):
-        pass
-    
-    def reloadBomb(self):
+        self.screen.blit(self.explotion, self.game.getThormanPosition())
+
+    def reloadBombs(self):
         self.bomb = pygame.image.load('../assets/Mjolnir.png')
         for eachBomb in self.game.getBombs():
+            xd = self.game.getBombs()
             self.screen.blit(self.bomb, eachBomb.getPosition())
 
     def drawExplotion(self):
