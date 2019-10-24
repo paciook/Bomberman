@@ -7,6 +7,8 @@ class Thorman(thing):
         self.position = pos
         self.name = name
         self.stepSize = 5
+        self.widht = qcyo
+        self.coordenates = 
 
     def move(self, direction):
         for index, item in enumerate(self.position):

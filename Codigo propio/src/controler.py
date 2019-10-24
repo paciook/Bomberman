@@ -6,7 +6,7 @@ import game
 import pygame
 import threading
 from pydispatch import dispatcher
-import Calculate Collisions as colls
+#import Calculate Collisions as colls
 CONTROLS = {'273': [0, -1], '274': [0, 1], '275': [1, 0],
             '276': [-1, 0], '32': [0, 0]}
 
@@ -40,7 +40,7 @@ class Controler():
 
     def mainLoop(self):
         while True:
-            self.mapArray = colls.arrayOf(border)
+            # self.mapArray = colls.arrayOf(border)
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     sys.exit()
@@ -60,9 +60,9 @@ class Controler():
                             self.visual.loadLimit(self.dimentions)
                             self.visual.reloadThormanThread(str(event.key))
             
-            for item in self.activeObjects:
-                colls.placeObject(item)
-            colls.verifyColls()
+            # for item in self.activeObjects:
+            #     colls.placeObject(item)
+            # colls.verifyColls()
 
 
             # self.visual.drawBombs('../assets/bmsprite.png')
