@@ -1,18 +1,23 @@
 import threading
 from pydispatch import dispatcher
 import time
+import sys
 
 
 class bombTimeCounter(threading.Thread):
     def __init__(self, bombsList):
         super().__init__()
-        self.bombs = bombsList
+        self.bombs = [0]
+        self.bombs[0] = 3
         self.bombTimer = [3]*len(self.bombs)
 
     def reloadBombs(self):
-        while True:
+        for i in range(3):
             time.sleep(1)
-            for index, i in enumerate(self.bombTimer):
-                i = i - 1
-                if i == 0:
-                    dispatcher.send(signal='Exploded', sender='bombsThread', bomba = index)
+            print("lols")
+        # while True:
+        #     time.sleep(1)
+        #     for index, i in enumerate(self.bombTimer):
+        #         self.bombTimer[index] = self.bombTimer[index] - 1
+        #         if self.bombTimer[index] == 0:
+        #             dispatcher.send(signal='Exploded', sender='bombsThread', bomba = index)

@@ -6,11 +6,8 @@ import game
 import pygame
 import threading
 from pydispatch import dispatcher
-<<<<<<< HEAD
+
 #import Calculate Collisions as colls
-=======
-# import Calculate Collisions as colls
->>>>>>> 8de1cfa491ea63d10d356633a8825d186a4233fd
 CONTROLS = {'273': [0, -1], '274': [0, 1], '275': [1, 0],
             '276': [-1, 0], '32': [0, 0]}
 
@@ -49,11 +46,8 @@ class Controler():
                             self.visual.reloadBackground()
                             self.visual.loadLimit(self.dimentions)
                             self.visual.reloadThormanThread(str(event.key))
-<<<<<<< HEAD
-            
-=======
+                        print("xd")
             self.visual.reloadBombs()
->>>>>>> 8de1cfa491ea63d10d356633a8825d186a4233fd
             # for item in self.activeObjects:
             #     colls.placeObject(item)
             # colls.verifyColls()
@@ -70,12 +64,12 @@ class Controler():
         return None
 
     def reloadBombsThread(self):
-        self.bombsThreadLogic = bombsThreadLogic.bombTimeCounter(self.game.getBombs())
-        BombsThread = threading.Thread(target=self.bombsThreadLogic.reloadBombs(), daemon=True)
+        self.bombsThread = bombsThreadLogic.bombTimeCounter(self.game.getBombs())
+        BombsThread = threading.Thread(target=self.bombsThread.reloadBombs(), args=(None,), daemon=True)
         BombsThread.start()
 
     def explodeBomb(self, bomb):
-        self.game.removeBombs()
+        self.game.removeBombs(bomb)
 
     # def addCollision(coll):
     #     self.collisions.append(coll)

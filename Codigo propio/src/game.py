@@ -29,8 +29,8 @@ class Game():
     def getBombs(self):
         return self.activeBombList
 
-    def removeBombs(self):
-        self.activeBombList.pop()
+    def removeBombs(self, bomb):
+        self.activeBombList.pop(bomb)
         self.availableBombs += 1
 
     def getAvailableBombs(self):
