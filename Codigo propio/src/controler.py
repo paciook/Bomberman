@@ -4,6 +4,7 @@ import bombsThreadLogic
 import time
 import game
 import pygame
+import Collisions as colls
 import threading
 from pydispatch import dispatcher
 
@@ -48,6 +49,10 @@ class Controler():
                             self.visual.reloadThormanThread(str(event.key))
                         print("xd")
             self.visual.reloadBombs()
+
+            for potencialColl in colls.closeness(self.activeObjects):
+                colls.compare(potencialColl)
+
             # for item in self.activeObjects:
             #     colls.placeObject(item)
             # colls.verifyColls()
