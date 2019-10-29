@@ -25,6 +25,8 @@ class Game():
 
     def plantBomb(self):
         self.activeBombList.append(self.thorman.plantBomb())
+        self.availableBombs -= 1
+        return
 
     def getBombs(self):
         return self.activeBombList

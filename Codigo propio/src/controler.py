@@ -23,7 +23,10 @@ class Controler():
         self.collisions = []
         self.activeObjects = []
         self.mainLoop()
-        dispatcher.connect(receiver = self.explodeBomb, signal='Exploded', sender = 'bombsThread')
+        self.bombs = None
+        self.elseniorthread = self.bombsThreadLogic.bombTimeCounter(daemon=True)
+        self.elseniorthread.start()
+        dispatcher.connect(receiver=self.explodeBomb, signal='Exploded', sender='bombsThread')
 
     def mainLoop(self):
         while True:
@@ -37,16 +40,24 @@ class Controler():
                     # print(event.key)
 
                         if str(event.key) == '32':
-                            if self.game.getAvailableBombs != 0:
+                            if self.game.getAvailableBombs() != 0:
                                 self.game.plantBomb()
                                 self.reloadBombsThread()
-
+                                print(threading.active_count())
                         else:
-                            self.game.moveThorman(CONTROLS[str(event.key)])
+                            keys = pygame.key.get_pressed()
+                            if keys[pygame.K_RIGHT]:
+                                self.game.moveThorman(CONTROLS['275'])
+                            if keys[pygame.K_LEFT]:
+                                self.game.moveThorman(CONTROLS['276'])
+                            if keys[pygame.K_UP]:
+                                self.game.moveThorman(CONTROLS['273'])
+                            if keys[pygame.K_DOWN]:
+                                self.game.moveThorman(CONTROLS['274'])
                             self.visual.reloadBackground()
                             self.visual.loadLimit(self.dimentions)
                             self.visual.reloadThormanThread(str(event.key))
-                        print("xd")
+
             self.visual.reloadBombs()
             # for item in self.activeObjects:
             #     colls.placeObject(item)
@@ -64,9 +75,12 @@ class Controler():
         return None
 
     def reloadBombsThread(self):
-        self.bombsThread = bombsThreadLogic.bombTimeCounter(self.game.getBombs())
-        BombsThread = threading.Thread(target=self.bombsThread.reloadBombs(), args=(None,), daemon=True)
-        BombsThread.start()
+        # acá estamos creando una bocha de threads
+
+        # yo haría una lista de threads
+        self.bombs = self.game.getBombs()
+
+            
 
     def explodeBomb(self, bomb):
         self.game.removeBombs(bomb)

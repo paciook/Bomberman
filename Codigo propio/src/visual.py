@@ -41,14 +41,9 @@ class Visual():
     def loadThormanImage(self, sprite, pos):
         self.thorman = pygame.image.load(sprite)
         self.screen.blit(self.thorman, pos)
-        
 
-    def reloadThormanThread(self, direction):
+    def changeThormanSprite(self, direction):
         self.thormanDirection = DIRECTIONS[direction]
-        reloadThormanThread = threading.Thread(target=self.thormanSpritesThread.reloadThorman(), daemon=True)
-        reloadThormanThread.start()
-
-    def changeThormanSprite(self):
         self.spriteNumber = self.spriteNumber + 1
         if self.spriteNumber == 4:
             self.spriteNumber = 1

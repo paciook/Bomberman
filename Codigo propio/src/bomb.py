@@ -1,11 +1,12 @@
 import time
+import copy
 
 
 class Bomb:
     def __init__(self, position):
         self.explotionTime = 0  # seconds
         self.explotionRange = 3
-        self.position = position
+        self.position = copy.deepcopy(position)
 
     def setPosition(self, pos):
         self.position = pos
