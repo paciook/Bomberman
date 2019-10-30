@@ -25,7 +25,6 @@ class Visual():
         self.spriteNumber = 0
         self.explotion = pygame.image.load("../assets/grasstexture.jpg")
         self.bombsThreadVisual = None
-        dispatcher.connect(receiver = self.reloadBombs, signal='Exploded', sender = 'bombsThread')
         dispatcher.connect(receiver = self.changeThormanSprite, signal = 'Change thorman sprite', sender = 'thormanSpritesThread' )
 
         pygame.key.set_repeat(20)
@@ -41,7 +40,8 @@ class Visual():
     def loadThormanImage(self, sprite, pos):
         self.thorman = pygame.image.load(sprite)
         self.screen.blit(self.thorman, pos)
-
+        
+    
     def changeThormanSprite(self, direction):
         self.thormanDirection = DIRECTIONS[direction]
         self.spriteNumber = self.spriteNumber + 1
@@ -69,9 +69,12 @@ class Visual():
 
     def reloadBombs(self):
         self.bomb = pygame.image.load('../assets/Mjolnir.png')
-        for eachBomb in self.game.getBombs():
-            xd = self.game.getBombs()
-            self.screen.blit(self.bomb, eachBomb.getPosition())
-
+        if self.game.getBombs() !=0:
+            for eachBomb in self.game.getBombs():
+                xd = self.game.getBombs()
+                self.screen.blit(self.bomb, eachBomb.getPosition())
+        else:
+            pass
+        
     def drawExplotion(self):
         pass

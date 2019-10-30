@@ -4,7 +4,7 @@ import bombsThreadLogic
 import time
 import game
 import pygame
-import Collisions as colls
+# import Collisions as colls
 import threading
 from pydispatch import dispatcher
 
@@ -25,8 +25,8 @@ class Controler():
         self.activeObjects = []
         self.mainLoop()
         self.bombs = None
-        self.elseniorthread = self.bombsThreadLogic.bombTimeCounter(daemon=True)
-        self.elseniorthread.start()
+        self.bombsThread = bombsThreadLogic.bombTimeCounter(daemon=True)
+        self.bombsThread.start()
         dispatcher.connect(receiver=self.explodeBomb, signal='Exploded', sender='bombsThread')
 
     def mainLoop(self):
@@ -37,8 +37,6 @@ class Controler():
                     sys.exit()
                 # self.game.mover_bm(event.tevent_name())
                 if event.type == pygame.KEYDOWN:  # alguien presionó una tecla
-                    # print(pygame.event.event_name(event.type))
-                    # print(event.key)
 
                         if str(event.key) == '32':
                             if self.game.getAvailableBombs() != 0:
@@ -57,12 +55,12 @@ class Controler():
                                 self.game.moveThorman(CONTROLS['274'])
                             self.visual.reloadBackground()
                             self.visual.loadLimit(self.dimentions)
-                            self.visual.reloadThormanThread(str(event.key))
+                            self.visual.changeThormanSprite(str(event.key))
 
-            self.visual.reloadBombs()
+                        self.visual.reloadBombs()
 
-            for potencialColl in colls.closeness(self.activeObjects):
-                colls.compare(potencialColl)
+            # for potencialColl in colls.closeness(self.activeObjects):
+            #     colls.compare(potencialColl)
 
             # for item in self.activeObjects:
             #     colls.placeObject(item)
@@ -83,8 +81,7 @@ class Controler():
         # acá estamos creando una bocha de threads
 
         # yo haría una lista de threads
-        self.bombs = self.game.getBombs()
-
+        self.bombsThread.setBombsList(self.game.getBombs())
             
 
     def explodeBomb(self, bomb):

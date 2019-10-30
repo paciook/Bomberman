@@ -4,7 +4,7 @@ import copy
 
 class Bomb:
     def __init__(self, position):
-        self.explotionTime = 0  # seconds
+        self.explotionTime = 3  # seconds
         self.explotionRange = 3
         self.position = copy.deepcopy(position)
 
