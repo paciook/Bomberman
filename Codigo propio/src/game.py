@@ -6,9 +6,13 @@ class Game():
     def __init__(self, playerName, dimentions):
         self.name = playerName
         self.dimentions = dimentions
-        self.thorman = Thorman(self.name)
+        self.thorman = None
         self.activeBombList = []
         self.availableBombs = 1
+
+    def createThorman(self):
+        self.thorman = Thorman(self.name)
+        return self.thorman
 
     def positionIsValid(self, direction):
         newPos = self.thorman.getNewTentativePosition(direction)
@@ -24,9 +28,10 @@ class Game():
         return self.thorman.getPosition()
 
     def plantBomb(self):
-        self.activeBombList.append(self.thorman.plantBomb())
+        theBomb = self.thorman.plantBomb()
+        self.activeBombList.append(theBomb)
         self.availableBombs -= 1
-        return
+        return theBomb
 
     def getBombs(self):
         return self.activeBombList
