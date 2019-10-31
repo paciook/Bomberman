@@ -5,8 +5,8 @@ import sys
 
 
 class bombTimeCounter(threading.Thread):
-    def __init__(self):
-        super().__init__()
+    def __init__(self, daemon):
+        super().__init__(daemon=daemon)
         dispatcher.connect(receiver=self.setBombsList, signal='Add Bomb', sender='Controler')
         self.bombsTimer = []
         self.run()

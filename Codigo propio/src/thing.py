@@ -13,6 +13,7 @@ class thing:
         self.hp = self.hp - obstacle.getDamage()
         if self.hp > 1:
             self.kill()
+        print("capooo")
         
     def kill(self):
         pass

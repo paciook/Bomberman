@@ -1,3 +1,4 @@
+
 from visual import Visual
 import thormanSpritesThread
 import bombsThreadLogic
@@ -15,16 +16,18 @@ CONTROLS = {'273': [0, -1], '274': [0, 1], '275': [1, 0],
 
 class Controler():
     def __init__(self):
+        self.activeObjects = []
         self.dimentions = (1200, 600)  # (640, 480)
-        self.game = game.Game('Fran', self.dimentions)
+        self.game = game.Game('Fran y Manu', self.dimentions)
+        self.activeObjects.append(self.game.createThorman())
         self.visual = Visual(self.dimentions, self.game)
         self.bombsThread = None
         self.loadImages()
         self.mapArray = []
         self.collisions = []
         self.activeObjects = []
-        # self.bombsThread = bombsThreadLogic.bombTimeCounter(daemon=True)
-        # self.bombsThread.start()
+        self.bombsThread = bombsThreadLogic.bombTimeCounter(daemon=True)
+        self.bombsThread.start()
         self.mainLoop()
         self.bombs = None
         dispatcher.connect(receiver=self.explodeBomb, signal='Exploded', sender='bombsThread')
@@ -40,7 +43,7 @@ class Controler():
 
                         if str(event.key) == '32':
                             if self.game.getAvailableBombs() != 0:
-                                self.game.plantBomb()
+                                self.activeObjects.append(self.game.plantBomb())
                                 self.reloadBombsThread()
                                 print(threading.active_count())
                         else:
@@ -95,6 +98,8 @@ class Controler():
     def setMapArray(self, mapArray):
         self.mapArray = mapArray
 
+    def appendActiveObject(self, newFriend):
+        self.activeObjects.append(newFriend)
 
 if __name__ == "__main__":
     controler = Controler()
