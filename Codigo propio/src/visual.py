@@ -19,14 +19,13 @@ class Visual():
         self.thorman = None
         self.thormanDirection = None
         self.thormanSpritesThread = thormanSpritesThread()
-        self.fixedWall = pygame.image.load("../assets/Wall hard.jpg")
-        fixedWallSize = Image.open("../assets/Wall hard.jpg")
+        self.fixedWall = pygame.image.load("../assets/Walls.png")
+        fixedWallSize = Image.open("../assets/Walls.png")
         self.fixedWallSize = fixedWallSize.size
         self.spriteNumber = 0
         self.explotion = pygame.image.load("../assets/grasstexture.jpg")
         self.bombsThreadVisual = None
         dispatcher.connect(receiver = self.changeThormanSprite, signal = 'Change thorman sprite', sender = 'thormanSpritesThread' )
-
         pygame.key.set_repeat(20)
         # para que procese eventos cuando se mantiene una tecla apretada
 
@@ -40,8 +39,7 @@ class Visual():
     def loadThormanImage(self, sprite, pos):
         self.thorman = pygame.image.load(sprite)
         self.screen.blit(self.thorman, pos)
-        
-    
+
     def changeThormanSprite(self, direction):
         self.thormanDirection = DIRECTIONS[direction]
         self.spriteNumber = self.spriteNumber + 1
@@ -51,30 +49,30 @@ class Visual():
         self.screen.blit(self.thorman, self.game.getThormanPosition())
 
     def loadLimit(self, dimension):
-        wallQuantity = 30
+        wallQuantity = 20
         wallWidth = int(dimension[0]/wallQuantity)
         self.fixedWall = pygame.transform.scale(self.fixedWall, (wallWidth, wallWidth))
         for ancho in range(wallQuantity):
             self.screen.blit(self.fixedWall, [ancho * wallWidth, 0])
             self.screen.blit(self.fixedWall, [ancho * wallWidth, dimension[1] - 40])
-        
+
         for alto in range((wallWidth) - 1):
             self.screen.blit(self.fixedWall, [0, alto * wallWidth])
             self.screen.blit(self.fixedWall, [dimension[0] - wallWidth, alto * wallWidth])        
     # def reloadThorman(self):
     # self.screen.blit(self.thorman, self.game.getThormanPosition())
-    
+
     def drawExplotionThread(self):
         self.screen.blit(self.explotion, self.game.getThormanPosition())
 
     def reloadBombs(self):
         self.bomb = pygame.image.load('../assets/Mjolnir.png')
-        if self.game.getBombs() !=0:
+        if self.game.getBombs() != 0:
             for eachBomb in self.game.getBombs():
                 xd = self.game.getBombs()
                 self.screen.blit(self.bomb, eachBomb.getPosition())
         else:
-            pass
-        
+            self.screen.blit(self.explotion, self.game.getThormanPosition())
+
     def drawExplotion(self):
         pass

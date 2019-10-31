@@ -23,10 +23,10 @@ class Controler():
         self.mapArray = []
         self.collisions = []
         self.activeObjects = []
+        # self.bombsThread = bombsThreadLogic.bombTimeCounter(daemon=True)
+        # self.bombsThread.start()
         self.mainLoop()
         self.bombs = None
-        self.bombsThread = bombsThreadLogic.bombTimeCounter(daemon=True)
-        self.bombsThread.start()
         dispatcher.connect(receiver=self.explodeBomb, signal='Exploded', sender='bombsThread')
 
     def mainLoop(self):
@@ -81,8 +81,7 @@ class Controler():
         # acá estamos creando una bocha de threads
 
         # yo haría una lista de threads
-        self.bombsThread.setBombsList(self.game.getBombs())
-            
+        dispatcher.send(signal='Add Bomb', sender='Controler')
 
     def explodeBomb(self, bomb):
         self.game.removeBombs(bomb)

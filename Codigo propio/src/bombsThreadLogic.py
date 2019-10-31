@@ -5,20 +5,23 @@ import sys
 
 
 class bombTimeCounter(threading.Thread):
-    def __init__(self, bombsList):
+    def __init__(self):
         super().__init__()
-        # self.bombs = [0]
-        # self.bombs[0] = 3
-        # self.bombTimer = [3]*len(self.bombs)
+        dispatcher.connect(receiver=self.setBombsList, signal='Add Bomb', sender='Controler')
         self.bombsTimer = []
+        self.run()
 
     def run(self):
         while True:
             time.sleep(1)
-            for index, i in enumerate(self.bombTimer):
-                self.bombTimer[index] = self.bombTimer[index] - 1
-                if self.bombTimer[index] == 0:
-                    dispatcher.send(signal='Exploded', sender='bombsThread', bomba = index)
+            try:
+                for index, i in enumerate(self.bombTimer):
+                    self.bombTimer[index] = self.bombTimer[index] - 1
+                    print(i)
+                    if self.bombTimer[index] == 0:
+                        dispatcher.send(signal='Exploded', sender='bombsThread', bomba = index)
+            except Exception:
+                pass
 
-    def setBombsList(self, bombs):
-        self.bombTimer.append(bombs[-1].getTime)
+    def setBombsList(self):
+        self.bombTimer.append(3)
