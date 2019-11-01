@@ -8,7 +8,11 @@ class Game():
         self.dimentions = dimentions
         self.thorman = None
         self.activeBombList = []
-        self.availableBombs = 1
+        self.availableBombs = 3
+        dispatcher.connect(receiver=self.explodeBomb, signal='Exploded', sender='bombsThread')
+
+    def explodeBomb(self):
+        print("xd")
 
     def createThorman(self):
         self.thorman = Thorman(self.name)
@@ -36,8 +40,8 @@ class Game():
     def getBombs(self):
         return self.activeBombList
 
-    def removeBombs(self, bomb):
-        self.activeBombList.pop(bomb)
+    def removeBombs(self):
+        self.activeBombList.pop(0)
         self.availableBombs += 1
 
     def getAvailableBombs(self):

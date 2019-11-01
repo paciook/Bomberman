@@ -9,19 +9,18 @@ class bombTimeCounter(threading.Thread):
         super().__init__(daemon=daemon)
         dispatcher.connect(receiver=self.setBombsList, signal='Add Bomb', sender='Controler')
         self.bombsTimer = []
-        self.run()
 
     def run(self):
         while True:
             time.sleep(1)
             try:
-                for index, i in enumerate(self.bombTimer):
-                    self.bombTimer[index] = self.bombTimer[index] - 1
+                for index, i in enumerate(self.bombsTimer):
+                    self.bombsTimer[index] = self.bombsTimer[index] - 1
                     print(i)
-                    if self.bombTimer[index] == 0:
-                        dispatcher.send(signal='Exploded', sender='bombsThread', bomba = index)
+                    if self.bombsTimer[index] == 0:
+                        dispatcher.send(signal='Exploded', sender='bombsThread')
             except Exception:
                 pass
 
     def setBombsList(self):
-        self.bombTimer.append(3)
+        self.bombsTimer.append(3)

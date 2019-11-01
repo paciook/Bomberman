@@ -73,6 +73,6 @@ class Visual():
                 self.screen.blit(self.bomb, eachBomb.getPosition())
         else:
             self.screen.blit(self.explotion, self.game.getThormanPosition())
-
+            self.screen.blit(self.background, [0, 0])
     def drawExplotion(self):
         pass
