@@ -14,8 +14,8 @@ class Game():
     def addExplodingBombs(self):
         self.explodingBombsList.append([self.activeBombList[0].getPosition, 0])        
 
-    def getExplodingBombsList(self):
-        pass
+    def getExplodingBomb(self, whichBomb):
+        return self.explodingBombsList[whichBomb]
 
     def createThorman(self):
         self.thorman = Thorman(self.name)
