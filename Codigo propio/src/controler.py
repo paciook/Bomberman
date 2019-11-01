@@ -1,10 +1,11 @@
 
 from visual import Visual
 import thormanSpritesThread
-import bombsThreadLogic
+import bombsThread
 import time
 import game
 import pygame
+import bombsExplotionThread
 # import Collisions as colls
 import threading
 from pydispatch import dispatcher
@@ -21,14 +22,14 @@ class Controler():
         self.game = game.Game('Fran y Manu', self.dimentions)
         self.activeObjects.append(self.game.createThorman())
         self.visual = Visual(self.dimentions, self.game)
-        self.bombsThread = None
         self.loadImages()
         self.mapArray = []
         self.collisions = []
         self.activeObjects = []
-        self.bombsThread = bombsThreadLogic.bombTimeCounter(daemon=True)
-        self.bombsThreadRun = threading.Thread(target=self.bombsThread.run) 
+        self.bombsTimeThread = bombsThread.bombTimeCounter(daemon=True)
+        self.bombsThreadRun = threading.Thread(target=self.bombsTimeThread.run) 
         self.bombsThreadRun.start()
+        self.bombsExplotionThread = 
         self.mainLoop()
         self.bombs = None
         dispatcher.connect(receiver=self.explodeBomb, signal='Exploded', sender='bombsThread')
@@ -42,7 +43,6 @@ class Controler():
                     sys.exit(0)
                 # self.game.mover_bm(event.tevent_name())
                 if event.type == pygame.KEYDOWN:  # alguien presionó una tecla
-
                         if str(event.key) == '32':
                             if self.game.getAvailableBombs() != 0:
                                 self.activeObjects.append(self.game.plantBomb())
@@ -60,7 +60,10 @@ class Controler():
                                 self.game.moveThorman(CONTROLS['274'])
                             self.visual.reloadBackground()
                             self.visual.loadLimit(self.dimentions)
-                            self.visual.changeThormanSprite(str(event.key))
+                            try:
+                                self.visual.changeThormanSprite(str(event.key))
+                            except Exception:
+                                pass
                             print(threading.active_count())
             self.visual.reloadBombs()
 
@@ -85,12 +88,13 @@ class Controler():
     def reloadBombsThread(self):
         # acá estamos creando una bocha de threads
 
-        # yo haría una lista de threads
+        # yo haría una lista de thread
         dispatcher.send(signal='Add Bomb', sender='Controler')
 
     def explodeBomb(self):
+        self.game.addExplodingBombs()
         self.game.removeBombs()
-
+        dispatcher.send(signal='Start Changing Explotion Sprites', sender='Controler')    
     # def addCollision(coll):
     #     self.collisions.append(coll)
 

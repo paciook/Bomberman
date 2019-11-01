@@ -9,10 +9,12 @@ class Game():
         self.thorman = None
         self.activeBombList = []
         self.availableBombs = 3
-        dispatcher.connect(receiver=self.explodeBomb, signal='Exploded', sender='bombsThread')
+        self.explodingBombsList = []
 
-    def explodeBomb(self):
-        print("xd")
+    def addExplodingBombs(self):
+        self.explodingBombsList.append([self.activeBombList[0].getPosition, 0])        
+
+    def getExplodingBombsList(self):
 
     def createThorman(self):
         self.thorman = Thorman(self.name)

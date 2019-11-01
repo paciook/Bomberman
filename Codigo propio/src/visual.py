@@ -26,6 +26,7 @@ class Visual():
         self.explotion = pygame.image.load("../assets/grasstexture.jpg")
         self.bombsThreadVisual = None
         dispatcher.connect(receiver = self.changeThormanSprite, signal = 'Change thorman sprite', sender = 'thormanSpritesThread' )
+        dispatcher.connect(receiver = self.changeExplotionSprite, signal = 'Change Explotion Sprite', sender = 'bombsExplotionThread' )
         pygame.key.set_repeat(20)
         # para que procese eventos cuando se mantiene una tecla apretada
 
@@ -74,5 +75,6 @@ class Visual():
         else:
             self.screen.blit(self.explotion, self.game.getThormanPosition())
             self.screen.blit(self.background, [0, 0])
-    def drawExplotion(self):
-        pass
+    
+    def changeExplotionSprite(self):
+        for i in range(len(self.game.getAvailableBombs))
