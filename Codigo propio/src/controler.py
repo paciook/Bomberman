@@ -29,7 +29,7 @@ class Controler():
         self.bombsTimeThread = bombsThread.bombTimeCounter(daemon=True)
         self.bombsThreadRun = threading.Thread(target=self.bombsTimeThread.run) 
         self.bombsThreadRun.start()
-        self.bombsExplotionThread = 
+        # self.bombsExplotionThread = 
         self.mainLoop()
         self.bombs = None
         dispatcher.connect(receiver=self.explodeBomb, signal='Exploded', sender='bombsThread')
@@ -43,28 +43,27 @@ class Controler():
                     sys.exit(0)
                 # self.game.mover_bm(event.tevent_name())
                 if event.type == pygame.KEYDOWN:  # alguien presionó una tecla
-                        if str(event.key) == '32':
-                            if self.game.getAvailableBombs() != 0:
-                                self.activeObjects.append(self.game.plantBomb())
-                                self.reloadBombsThread()
+                    keys = pygame.key.get_pressed()
+                    if keys[pygame.K_RIGHT]:
+                        self.game.moveThorman(CONTROLS['275'])
+                    if keys[pygame.K_LEFT]:
+                        self.game.moveThorman(CONTROLS['276'])
+                    if keys[pygame.K_UP]:
+                        self.game.moveThorman(CONTROLS['273'])
+                    if keys[pygame.K_DOWN]:
+                        self.game.moveThorman(CONTROLS['274'])
+                    if keys[pygame.K_SPACE]:
+                        if self.game.getAvailableBombs() != 0:
+                            self.activeObjects.append(self.game.plantBomb())
+                            self.reloadBombsThread()
 
-                        else:
-                            keys = pygame.key.get_pressed()
-                            if keys[pygame.K_RIGHT]:
-                                self.game.moveThorman(CONTROLS['275'])
-                            if keys[pygame.K_LEFT]:
-                                self.game.moveThorman(CONTROLS['276'])
-                            if keys[pygame.K_UP]:
-                                self.game.moveThorman(CONTROLS['273'])
-                            if keys[pygame.K_DOWN]:
-                                self.game.moveThorman(CONTROLS['274'])
-                            self.visual.reloadBackground()
-                            self.visual.loadLimit(self.dimentions)
-                            try:
-                                self.visual.changeThormanSprite(str(event.key))
-                            except Exception:
-                                pass
-                            print(threading.active_count())
+                    self.visual.reloadBackground()
+                    self.visual.loadLimit(self.dimentions)
+                    try:
+                        self.visual.changeThormanSprite(str(event.key))
+                    except Exception:
+                        pass
+                    print(threading.active_count())
             self.visual.reloadBombs()
 
             # for potencialColl in colls.closeness(self.activeObjects):
@@ -92,9 +91,9 @@ class Controler():
         dispatcher.send(signal='Add Bomb', sender='Controler')
 
     def explodeBomb(self):
-        self.game.addExplodingBombs()
+        # self.game.addExplodingBombs()
         self.game.removeBombs()
-        dispatcher.send(signal='Start Changing Explotion Sprites', sender='Controler')    
+        # dispatcher.send(signal='Start Changing Explotion Sprites', sender='Controler')    
     # def addCollision(coll):
     #     self.collisions.append(coll)
 

@@ -68,13 +68,17 @@ class Visual():
 
     def reloadBombs(self):
         self.bomb = pygame.image.load('../assets/Mjolnir.png')
-        if self.game.getBombs() != 0:
+        if len(self.game.getBombs()) != 0:
             for eachBomb in self.game.getBombs():
                 xd = self.game.getBombs()
                 self.screen.blit(self.bomb, eachBomb.getPosition())
+                once = True
         else:
-            self.screen.blit(self.explotion, self.game.getThormanPosition())
-            self.screen.blit(self.background, [0, 0])
-    
+            if once is True:
+                self.screen.blit(self.explotion, self.game.getThormanPosition())
+                self.screen.blit(self.background, [0, 0])
+                once = False
+
     def changeExplotionSprite(self):
-        for i in range(len(self.game.getAvailableBombs))
+        for i in range(len(self.game.getAvailableBombs)):
+            pass

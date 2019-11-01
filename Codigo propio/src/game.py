@@ -8,13 +8,14 @@ class Game():
         self.dimentions = dimentions
         self.thorman = None
         self.activeBombList = []
-        self.availableBombs = 3
+        self.availableBombs = 5
         self.explodingBombsList = []
 
     def addExplodingBombs(self):
         self.explodingBombsList.append([self.activeBombList[0].getPosition, 0])        
 
     def getExplodingBombsList(self):
+        pass
 
     def createThorman(self):
         self.thorman = Thorman(self.name)
@@ -48,3 +49,4 @@ class Game():
 
     def getAvailableBombs(self):
         return self.availableBombs
+        
