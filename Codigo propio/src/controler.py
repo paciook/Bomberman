@@ -27,9 +27,11 @@ class Controler():
         self.collisions = []
         self.activeObjects = []
         self.bombsTimeThread = bombsThread.bombTimeCounter(daemon=True)
-        self.bombsThreadRun = threading.Thread(target=self.bombsTimeThread.run) 
+        self.bombsThreadRun = threading.Thread(target=self.bombsTimeThread.run)
         self.bombsThreadRun.start()
-        # self.bombsExplotionThread = 
+        self.bombsExplotionThread = bombsExplotionThread.bombAnimation(daemon=True)
+        self.bombsExplotionThreadRun = threading.Thread(target=self.bombsExplotionThread.run)
+        self.bombsExplotionThreadRun.start()
         self.mainLoop()
         self.bombs = None
         dispatcher.connect(receiver=self.explodeBomb, signal='Exploded', sender='bombsThread')
@@ -56,24 +58,19 @@ class Controler():
                         if self.game.getAvailableBombs() != 0:
                             self.activeObjects.append(self.game.plantBomb())
                             self.reloadBombsThread()
-
-                    self.visual.reloadBackground()
-                    self.visual.loadLimit(self.dimentions)
+                    self.visual.reloadEverything()
                     try:
                         self.visual.changeThormanSprite(str(event.key))
                     except Exception:
-                        pass
+                        self.visual.changeThormanSprite(True)
                     print(threading.active_count())
-            self.visual.reloadBombs()
+                    self.visual.reloadBombs()
 
             # for potencialColl in colls.closeness(self.activeObjects):
             #     colls.compare(potencialColl)
-
             # for item in self.activeObjects:
             #     colls.placeObject(item)
             # colls.verifyColls()
-
-
             # self.visual.drawBombs('../assets/bmsprite.png')
             pygame.display.flip()
 
@@ -86,14 +83,14 @@ class Controler():
 
     def reloadBombsThread(self):
         # acá estamos creando una bocha de threads
-
         # yo haría una lista de thread
         dispatcher.send(signal='Add Bomb', sender='Controler')
 
     def explodeBomb(self):
-        # self.game.addExplodingBombs()
+        dispatcher.send(signal='Start Changing Explotion Sprites', sender='Controler')
+        self.game.addExplodingBombs()
         self.game.removeBombs()
-        # dispatcher.send(signal='Start Changing Explotion Sprites', sender='Controler')    
+
     # def addCollision(coll):
     #     self.collisions.append(coll)
 

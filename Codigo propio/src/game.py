@@ -12,7 +12,9 @@ class Game():
         self.explodingBombsList = []
 
     def addExplodingBombs(self):
-        self.explodingBombsList.append([self.activeBombList[0].getPosition, 0])        
+        self.explodingBombsList.append(self.activeBombList[0].getPosition())
+        print(self.explodingBombsList[0])
+        print("lol")
 
     def getExplodingBomb(self, whichBomb):
         return self.explodingBombsList[whichBomb]
@@ -49,4 +51,3 @@ class Game():
 
     def getAvailableBombs(self):
         return self.availableBombs
-        

@@ -1,6 +1,6 @@
 from thing import thing
 from bomb import Bomb
-
+from lightning import Lightning
 
 class Thorman(thing):
     def __init__(self, name, pos=[0, 0]):
@@ -9,6 +9,10 @@ class Thorman(thing):
         self.stepSize = 5
         # self.widht = qcyo
         # self.coordenates = 
+
+    def createLightning(self):
+        lightning = Lightning(self.position)
+        return lightning
 
     def move(self, direction):
         for index, item in enumerate(self.position):

@@ -9,16 +9,16 @@ class bombAnimation(threading.Thread):
         super().__init__(daemon=daemon)
         dispatcher.connect(receiver=self.addExplotion, signal='Start Changing Explotion Sprites', sender='Controler')
         self.explotions = []
-        self.spritenum = None
 
     def run(self):
         while True:
-            for index, i in enumerate(self.explotions)
+            for index, i in enumerate(self.explotions):
                 time.sleep(0.1)
                 self.explotions[index] = self.explotions[index] + 1
-                if self.explotions == 4:
+                if self.explotions[index] >= 4:
                     self.explotions.pop(0)
-                dispatcher.send(signal = "Change Explotion Sprite", sender = "bombsExplotionThread", sprite = (self.spritenum, index))
+                else:
+                    dispatcher.send(signal = "Change Explotion Sprite", sender = "bombsExplotionThread", spritenum = (self.explotions[index], index))
                 
-    def addExplotion(self,explotion):
-        self.explotions.append(explotion)
+    def addExplotion(self):
+        self.explotions.append(0)
