@@ -26,19 +26,22 @@ class Controler():
         self.mapArray = []
         self.collisions = []
         self.activeObjects = []
+        # --------- THREADS -----------
         self.bombsTimeThread = bombsThread.bombTimeCounter(daemon=True)
         self.bombsThreadRun = threading.Thread(target=self.bombsTimeThread.run)
         self.bombsThreadRun.start()
-        self.bombsExplotionThread = bombsExplotionThread.bombAnimation(daemon=True)
-        self.bombsExplotionThreadRun = threading.Thread(target=self.bombsExplotionThread.run)
-        self.bombsExplotionThreadRun.start()
+        self.explotionNumber = 0
+        self.bombsExplotionThreadList = []
+        # -----------------------------
         self.mainLoop()
         self.bombs = None
         dispatcher.connect(receiver=self.explodeBomb, signal='Exploded', sender='bombsThread')
 
     def mainLoop(self):
+        self.visual.reloadEverything()
         while True:
             # self.mapArray = colls.arrayOf(border)
+            dispatcher.connect(receiver = self.reloadExplotionSprite, signal = 'Change Explotion Sprite', sender = 'bombsExplotionThread' )
             dispatcher.connect(receiver=self.explodeBomb, signal='Exploded', sender='bombsThread')
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
@@ -58,13 +61,9 @@ class Controler():
                         if self.game.getAvailableBombs() != 0:
                             self.activeObjects.append(self.game.plantBomb())
                             self.reloadBombsThread()
+                    else:
+                        self.game.setThormanDirection(str(event.key))
                     self.visual.reloadEverything()
-                    try:
-                        self.visual.changeThormanSprite(str(event.key))
-                    except Exception:
-                        self.visual.changeThormanSprite(True)
-                    print(threading.active_count())
-                    self.visual.reloadBombs()
 
             # for potencialColl in colls.closeness(self.activeObjects):
             #     colls.compare(potencialColl)
@@ -74,11 +73,15 @@ class Controler():
             # self.visual.drawBombs('../assets/bmsprite.png')
             pygame.display.flip()
 
+    def reloadExplotionSprite(self, spritenum):
+        self.visual.reloadEverything()
+        self.game.setExplotionSprite(spritenum)
+
     def loadImages(self):
         self.visual.loadBackgroundImage('../assets/Wallpaper.jpg')
         self.visual.loadThormanImage('../assets/Thorman/ThormanRight1.png',
                                      (2, 2))
-        self.visual.loadLimit(self.dimentions)
+        self.visual.loadLimit()
         return None
 
     def reloadBombsThread(self):
@@ -88,9 +91,14 @@ class Controler():
 
     def explodeBomb(self):
         dispatcher.send(signal='Start Changing Explotion Sprites', sender='Controler')
+        bombsExplotionThreadxd = bombsExplotionThread.bombAnimation(daemon=True, explotionNumber=self.explotionNumber)
+        self.explotionNumber += 1
+        bombsExplotionThreadRun = threading.Thread(target=bombsExplotionThreadxd.run)
+        self.bombsExplotionThreadList.append(bombsExplotionThreadRun)
+        bombsExplotionThreadRun.start()
         self.game.addExplodingBombs()
         self.game.removeBombs()
-
+        self.visual.reloadEverything()
     # def addCollision(coll):
     #     self.collisions.append(coll)
 

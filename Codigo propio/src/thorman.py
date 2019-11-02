@@ -7,11 +7,18 @@ class Thorman(thing):
         self.position = pos
         self.name = name
         self.stepSize = 5
+        self.direction = '275'
         # self.widht = qcyo
         # self.coordenates = 
+    
+    def getDirection(self):
+        return self.direction
 
-    def createLightning(self):
-        lightning = Lightning(self.position)
+    def setDirection(self, direction):
+        self.direction = direction
+
+    def createLightning(self, position):
+        lightning = Lightning(position)
         return lightning
 
     def move(self, direction):

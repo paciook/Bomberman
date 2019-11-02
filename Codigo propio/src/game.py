@@ -1,6 +1,7 @@
 from controler import *
 from thorman import Thorman
-
+from lightning import Lightning
+import time
 
 class Game():
     def __init__(self, playerName, dimentions):
@@ -11,17 +12,18 @@ class Game():
         self.availableBombs = 5
         self.explodingBombsList = []
 
-    def addExplodingBombs(self):
-        self.explodingBombsList.append(self.activeBombList[0].getPosition())
-        print(self.explodingBombsList[0])
-        print("lol")
 
-    def getExplodingBomb(self, whichBomb):
-        return self.explodingBombsList[whichBomb]
+    # --------- THORMAN -----------
 
     def createThorman(self):
         self.thorman = Thorman(self.name)
         return self.thorman
+
+    def getThormanDirection(self):
+        return self.thorman.getDirection()
+
+    def setThormanDirection(self, direction):
+        self.thorman.setDirection(direction)
 
     def positionIsValid(self, direction):
         newPos = self.thorman.getNewTentativePosition(direction)
@@ -35,6 +37,12 @@ class Game():
 
     def getThormanPosition(self):
         return self.thorman.getPosition()
+
+
+    # -------------------------------------
+
+
+    # --------- MJOLNIR (BOMBS) -----------
 
     def plantBomb(self):
         theBomb = self.thorman.plantBomb()
@@ -51,3 +59,17 @@ class Game():
 
     def getAvailableBombs(self):
         return self.availableBombs
+
+
+
+ # --------- LIGHNINGS (EXPLOTIONS) -----------
+    def addExplodingBombs(self):
+        lightning = self.thorman.createLightning(self.activeBombList[0].getPosition())
+        self.explodingBombsList.append(lightning)
+
+    def getExplodingBomb(self):
+        return self.explodingBombsList
+
+    def setExplotionSprite(self, spritenum):
+        time.sleep(1)
+        self.explodingBombsList[spritenum].setSpriteNumber()
