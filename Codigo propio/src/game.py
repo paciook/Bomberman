@@ -70,6 +70,10 @@ class Game():
     def getExplodingBomb(self):
         return self.explodingBombsList
 
-    def setExplotionSprite(self, spritenum):
-        time.sleep(1)
-        self.explodingBombsList[spritenum].setSpriteNumber()
+    def delExplodingBomb(self, explotionNumber):
+        print(len(self.explodingBombsList))
+        self.explodingBombsList.pop(explotionNumber)
+        print(len(self.explodingBombsList))
+
+    def setExplotionSprite(self, explotionNumber):
+        self.explodingBombsList[explotionNumber].setSpriteNumber()

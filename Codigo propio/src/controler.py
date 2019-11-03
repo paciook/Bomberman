@@ -25,7 +25,6 @@ class Controler():
         self.loadImages()
         self.mapArray = []
         self.collisions = []
-        self.activeObjects = []
         # --------- THREADS -----------
         self.bombsTimeThread = bombsThread.bombTimeCounter(daemon=True)
         self.bombsThreadRun = threading.Thread(target=self.bombsTimeThread.run)
@@ -33,16 +32,16 @@ class Controler():
         self.explotionNumber = 0
         self.bombsExplotionThreadList = []
         # -----------------------------
+        dispatcher.connect(receiver=self.explodeBomb, signal='Exploded', sender='bombsThread')
+        dispatcher.connect(receiver = self.reloadExplotionSprite, signal = 'Change Explotion Sprite', sender = 'bombsExplotionThread' )
+        dispatcher.connect(receiver = self.delExplotionSprite, signal = "Delete Explotion", sender = 'bombsExplotionThread' )
         self.mainLoop()
         self.bombs = None
-        dispatcher.connect(receiver=self.explodeBomb, signal='Exploded', sender='bombsThread')
 
     def mainLoop(self):
         self.visual.reloadEverything()
         while True:
             # self.mapArray = colls.arrayOf(border)
-            dispatcher.connect(receiver = self.reloadExplotionSprite, signal = 'Change Explotion Sprite', sender = 'bombsExplotionThread' )
-            dispatcher.connect(receiver=self.explodeBomb, signal='Exploded', sender='bombsThread')
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     sys.exit(0)
@@ -59,7 +58,8 @@ class Controler():
                         self.game.moveThorman(CONTROLS['274'])
                     if keys[pygame.K_SPACE]:
                         if self.game.getAvailableBombs() != 0:
-                            self.activeObjects.append(self.game.plantBomb())
+                            self.game.plantBomb()
+                            # self.activeObjects.append(self.game.plantBomb())
                             self.reloadBombsThread()
                     else:
                         self.game.setThormanDirection(str(event.key))
@@ -73,9 +73,12 @@ class Controler():
             # self.visual.drawBombs('../assets/bmsprite.png')
             pygame.display.flip()
 
-    def reloadExplotionSprite(self, spritenum):
+    def reloadExplotionSprite(self, explotionNumber):
         self.visual.reloadEverything()
-        self.game.setExplotionSprite(spritenum)
+        if explotionNumber[1] == 3:
+            pass
+        else:
+            self.game.setExplotionSprite(explotionNumber[0])
 
     def loadImages(self):
         self.visual.loadBackgroundImage('../assets/Wallpaper.jpg')
@@ -92,15 +95,20 @@ class Controler():
     def explodeBomb(self):
         dispatcher.send(signal='Start Changing Explotion Sprites', sender='Controler')
         bombsExplotionThreadxd = bombsExplotionThread.bombAnimation(daemon=True, explotionNumber=self.explotionNumber)
-        self.explotionNumber += 1
         bombsExplotionThreadRun = threading.Thread(target=bombsExplotionThreadxd.run)
         self.bombsExplotionThreadList.append(bombsExplotionThreadRun)
         bombsExplotionThreadRun.start()
+        self.explotionNumber += 1
         self.game.addExplodingBombs()
         self.game.removeBombs()
         self.visual.reloadEverything()
     # def addCollision(coll):
     #     self.collisions.append(coll)
+
+    def delExplotionSprite(self, explotionNumber):
+        self.explotionNumber -= 1
+        self.game.delExplodingBomb(explotionNumber)
+        self.visual.reloadEverything()
 
     def getMapArray(self):
         return self.mapArray
