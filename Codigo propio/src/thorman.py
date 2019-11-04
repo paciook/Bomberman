@@ -41,3 +41,6 @@ class Thorman(thing):
     def plantBomb(self):
         theBomb = Bomb(self.position)
         return theBomb
+
+    def getThormanPosition(self):
+        return self.getPosition

@@ -6,7 +6,7 @@ import thorman
 import threading
 import time
 from pydispatch import dispatcher
-DIRECTIONS = {'273': "Back", '274': "Front", '275': "Right", '276': "Left"}
+DIRECTIONS = {'273': "Back", '274': "Front", '275': "Right", '276': "Left", 'Standing Still': 'Still'}
 
 
 class Visual():
@@ -44,24 +44,30 @@ class Visual():
 
     def changeThormanSprite(self):
         self.thormanDirection = DIRECTIONS[self.game.getThormanDirection()]
-        self.screen.blit(self.thorman, self.game.getThormanPosition())
         self.spriteNumber = self.spriteNumber + 1
-        if self.spriteNumber == 4:
-            self.spriteNumber = 1
-        self.thorman = pygame.image.load("../assets/Thorman/Thorman" + str(self.thormanDirection) + str(self.spriteNumber) + ".png")
-
+        if self.thormanDirection == 'Still':
+            if self.spriteNumber > 2:
+                self.spriteNumber = 1
+            self.thorman = pygame.image.load("../assets/Thorman/ThormanStill" + str(self.spriteNumber) + ".png")
+            self.screen.blit(self.thorman, self.game.getThormanPosition())
+        else:
+            self.screen.blit(self.thorman, self.game.getThormanPosition())
+            if self.spriteNumber == 4:
+                self.spriteNumber = 1
+            self.thorman = pygame.image.load("../assets/Thorman/Thorman" + str(self.thormanDirection) + str(self.spriteNumber) + ".png")
 
     def loadLimit(self):
-        wallQuantity = 20
-        wallWidth = int(self.dimentions[0]/wallQuantity)
-        self.fixedWall = pygame.transform.scale(self.fixedWall, (wallWidth, wallWidth))
-        for ancho in range(wallQuantity):
-            self.screen.blit(self.fixedWall, [ancho * wallWidth, 0])
-            self.screen.blit(self.fixedWall, [ancho * wallWidth, self.dimentions[1] - 40])
+        self.screen.blit(self.fixedWall, [0, 0])
+        # wallQuantity = 20
+        # wallWidth = int(self.dimentions[0]/wallQuantity)
+        # self.fixedWall = pygame.transform.scale(self.fixedWall, (wallWidth, wallWidth))
+        # for ancho in range(wallQuantity):
+        #     self.screen.blit(self.fixedWall, [ancho * wallWidth, 0])
+        #     self.screen.blit(self.fixedWall, [ancho * wallWidth, self.dimentions[1] - 40])
 
-        for alto in range((wallWidth) - 1):
-            self.screen.blit(self.fixedWall, [0, alto * wallWidth])
-            self.screen.blit(self.fixedWall, [self.dimentions[0] - wallWidth, alto * wallWidth])        
+        # for alto in range((wallWidth) - 1):
+        #     self.screen.blit(self.fixedWall, [0, alto * wallWidth])
+        #     self.screen.blit(self.fixedWall, [self.dimentions[0] - wallWidth, alto * wallWidth])        
 
     def reloadBombs(self):
         if len(self.game.getBombs()) != 0:
@@ -75,7 +81,6 @@ class Visual():
             for eachLightning in self.game.getExplodingBomb():
                 self.lightning = pygame.image.load("../assets/Lightning/Lightning" + str(eachLightning.getSpriteNumber()) + ".png")
                 self.screen.blit(self.lightning, eachLightning.getPosition())
-
 
     def reloadEverything(self):
         self.reloadBackground()
