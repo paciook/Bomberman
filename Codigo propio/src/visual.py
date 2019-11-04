@@ -20,7 +20,7 @@ class Visual():
         self.thorman = pygame.image.load("../assets/Thorman/ThormanRight1.png")
         self.thormanDirection = None
         self.thormanSpritesThread = thormanSpritesThread()
-        self.fixedWall = pygame.image.load("../assets/Walls.png")
+        self.fixedWall = pygame.image.load("../assets/Wallpaper.png")
         fixedWallSize = Image.open("../assets/Walls.png")
         self.bomb = pygame.image.load('../assets/Mjolnir.png')
         self.fixedWallSize = fixedWallSize.size
@@ -33,6 +33,7 @@ class Visual():
 
     def loadBackgroundImage(self, backgroundDirection):
         self.background = pygame.image.load(backgroundDirection)
+        self.background = pygame.transform.scale(self.background, (1200, 600))
         self.screen.blit(self.background, [0, 0])
 
     def reloadBackground(self):
@@ -84,7 +85,8 @@ class Visual():
 
     def reloadEverything(self):
         self.reloadBackground()
-        self.loadLimit()
+        
         self.reloadBombs()
         self.changeThormanSprite()
         self.reloadExplotionSprite()
+        self.loadLimit()

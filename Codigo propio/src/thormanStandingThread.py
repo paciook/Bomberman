@@ -16,7 +16,7 @@ class standingStill(threading.Thread):
             if self.moving == True:
                 pass
             else:
-                time.sleep(0.5)
+                time.sleep(1)
                 dispatcher.send(signal = 'Stand Still', sender='thormanStandingThread')
         return
 
