@@ -5,12 +5,12 @@ import time
 import game
 import pygame
 import bombsExplotionThread
-# import Collisions as colls
+import Collisions as colls
 import threading
 from pydispatch import dispatcher
 import thormanStandingThread
 
-#import Calculate Collisions as colls
+
 CONTROLS = {'273': [0, -1], '274': [0, 1], '275': [1, 0],
             '276': [-1, 0], 'Standing Still': [100, 100]}
 
@@ -66,8 +66,8 @@ class Controler():
                         self.game.moveThorman(CONTROLS['274'])
                     if keys[pygame.K_SPACE]:
                         if self.game.getAvailableBombs() != 0:
-                            self.game.plantBomb()
-                            # self.activeObjects.append(self.game.plantBomb())
+                            # self.game.plantBomb()
+                            self.activeObjects.append(self.game.plantBomb())
                             self.reloadBombsThread()
                     else:
                         self.game.setThormanDirection(str(event.key))
@@ -77,8 +77,11 @@ class Controler():
                     if self.thormanMoving == True:
                         dispatcher.send(signal = "Not Moving", sender = 'Controler')
                         self.thormanMoving = False
-            # for potencialColl in colls.closeness(self.activeObjects):
-            #     colls.compare(potencialColl)
+            
+            colls.closeness(self.activeObjects)
+
+            #for potencialColl in colls.closeness(self.activeObjects):
+            #    colls.compare(potencialColl)
             # for item in self.activeObjects:
             #     colls.placeObject(item)
             # colls.verifyColls()

@@ -76,4 +76,4 @@ class Game():
         print(len(self.explodingBombsList))
 
     def setExplotionSprite(self, explotionNumber):
-        self.explodingBombsList[explotionNumber].setSpriteNumber()
+        self.explodingBombsList[explotionNumber - 1].setSpriteNumber()
