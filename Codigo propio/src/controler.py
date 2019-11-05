@@ -26,14 +26,15 @@ class Controler():
         self.mapArray = []
         self.collisions = []
         self.thormanMoving = True
+        self.xd = True
         # --------- THREADS -----------
         self.bombsTimeThread = bombsThread.bombTimeCounter(daemon=True)
         self.bombsThreadRun = threading.Thread(target=self.bombsTimeThread.run)
         self.bombsThreadRun.start()
         self.explotionNumber = 0
         self.bombsExplotionThreadList = []
-        self.thormanStandingThread = thormanStandingThread.standingStill(daemon=True)
-        self.thormanStandingThreadRun = threading.Thread(target=self.thormanStandingThread.run)
+        self.thormanStandingThreadRun = thormanStandingThread.standingStill(daemon=True)
+        # self.thormanStandingThreadRun = threading.Thread(target=self.thormanStandingThread.run)
         self.thormanStandingThreadRun.start()
         self.thormanStandingThreadStarted = False
         # -----------------------------
@@ -41,6 +42,7 @@ class Controler():
         dispatcher.connect(receiver = self.reloadExplotionSprite, signal = 'Change Explotion Sprite', sender = 'bombsExplotionThread' )
         dispatcher.connect(receiver = self.delExplotionSprite, signal = "Delete Explotion", sender = 'bombsExplotionThread' )
         dispatcher.connect(receiver = self.reloadThorman, signal = "Stand Still", sender = 'thormanStandingThread' )
+        dispatcher.connect(receiver=self.flip, signal = 'Finished')
         self.mainLoop()
         self.bombs = None
 
@@ -82,15 +84,16 @@ class Controler():
             # for item in self.activeObjects:
             #     colls.placeObject(item)
             # colls.verifyColls()
-            pygame.display.flip()
-
+            if self.xd == True:
+                pygame.display.flip()
+                self.xd = False
     # --------- LIGHTNINGS(EXPLOTIONS) -----------
     def reloadExplotionSprite(self, explotionNumber):
         self.visual.reloadEverything()
-        if explotionNumber[1] == 3:
+        if explotionNumber == 3:
             pass
         else:
-            self.game.setExplotionSprite(explotionNumber[0])
+            self.game.setExplotionSprite(explotionNumber)
 
     def delExplotionSprite(self, explotionNumber):
         self.explotionNumber -= 1
@@ -105,10 +108,11 @@ class Controler():
 
     def explodeBomb(self):
         dispatcher.send(signal='Start Changing Explotion Sprites', sender='Controler')
-        bombsExplotionThreadxd = bombsExplotionThread.bombAnimation(daemon=True, explotionNumber=self.explotionNumber)
-        bombsExplotionThreadRun = threading.Thread(target=bombsExplotionThreadxd.run)
+        bombsExplotionThreadRun = bombsExplotionThread.bombAnimation(daemon=True, explotionNumber=self.explotionNumber)
+        # bombsExplotionThreadRun = threading.Thread(target=bombsExplotionThreadxd.run)
         self.bombsExplotionThreadList.append(bombsExplotionThreadRun)
         bombsExplotionThreadRun.start()
+        # bombsExplotionThreadRun.start()
         self.explotionNumber += 1
         self.game.addExplodingBombs()
         self.game.removeBombs()
@@ -119,6 +123,9 @@ class Controler():
         self.visual.reloadEverything()
 
     # --------- OTHERS -----------
+    def flip(self):
+        pygame.display.flip()
+
     def loadImages(self):
         self.visual.loadBackgroundImage('../assets/Wallpaper.jpg')
         self.visual.loadThormanImage('../assets/Thorman/ThormanRight1.png',

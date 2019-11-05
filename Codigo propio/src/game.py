@@ -71,9 +71,7 @@ class Game():
         return self.explodingBombsList
 
     def delExplodingBomb(self, explotionNumber):
-        print(len(self.explodingBombsList))
-        self.explodingBombsList.pop(explotionNumber)
-        print(len(self.explodingBombsList))
+        self.explodingBombsList.pop(0)
 
     def setExplotionSprite(self, explotionNumber):
         self.explodingBombsList[explotionNumber].setSpriteNumber()

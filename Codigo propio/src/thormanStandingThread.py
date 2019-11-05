@@ -1,7 +1,6 @@
 import threading
 from pydispatch import dispatcher
 import time
-import sys
 
 class standingStill(threading.Thread):
     def __init__(self, daemon):
@@ -16,7 +15,7 @@ class standingStill(threading.Thread):
             if self.moving == True:
                 pass
             else:
-                time.sleep(1)
+                time.sleep(0.5)
                 dispatcher.send(signal = 'Stand Still', sender='thormanStandingThread')
         return
 

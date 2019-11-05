@@ -11,12 +11,12 @@ class bombAnimation(threading.Thread):
         dispatcher.connect(receiver = self.decreaseExplotionNumber, signal = "Delete Explotion", sender = 'bombsExplotionThread')
 
     def run(self):
-        for i in range(4):
+        for i in range(3):
             time.sleep(0.5)
-            dispatcher.send(signal = "Change Explotion Sprite", sender = "bombsExplotionThread", explotionNumber = (self.explotionNumber, i))
-            if i == 3:
+            dispatcher.send(signal = "Change Explotion Sprite", sender = "bombsExplotionThread", explotionNumber = self.explotionNumber)
+            if i == 2:
                 time.sleep(0.5)
-                dispatcher.send(signal = "Delete Explotion", sender = "bombsExplotionThread", explotionNumber = (self.explotionNumber))
+                dispatcher.send(signal = "Delete Explotion", sender = "bombsExplotionThread", explotionNumber = self.explotionNumber)
         return
 
     def decreaseExplotionNumber(self):

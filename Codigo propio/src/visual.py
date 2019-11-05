@@ -78,15 +78,15 @@ class Visual():
             pass
 
     def reloadExplotionSprite(self):
-         if len(self.game.getExplodingBomb()) != 0:
+        if len(self.game.getExplodingBomb()) != 0:
             for eachLightning in self.game.getExplodingBomb():
                 self.lightning = pygame.image.load("../assets/Lightning/Lightning" + str(eachLightning.getSpriteNumber()) + ".png")
                 self.screen.blit(self.lightning, eachLightning.getPosition())
 
     def reloadEverything(self):
         self.reloadBackground()
-        
         self.reloadBombs()
         self.changeThormanSprite()
         self.reloadExplotionSprite()
         self.loadLimit()
+        dispatcher.send(signal = 'Finished')
