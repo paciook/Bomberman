@@ -41,27 +41,31 @@ def arrayOf(pathOfFile):
                 return True """
 
 def closeness(activeObjects):
-    for item1 in range(0, activeObjects[__len__]):
-        for item2 in range(0, activeObjects[__len__]):
+    potentialColls = []
+    for item1 in range(0, len(activeObjects)):
+        for item2 in range(0, len(activeObjects)):
             if item1 == item2:
                 pass     
             else:
-                if activeObjects[item2].getPosition()[0] > activeObjects[item1].getPosition()[0] and activeObjects[item2].getPosition()[0] < activeObjects[item1].getPosition()[0] + activeObjects[item1].getWidth():
+                if activeObjects[item2].getPosition()[0] > activeObjects[item1].getPosition()[0] and activeObjects[item2].getPosition()[0] < activeObjects[item1].getPosition()[0] + activeObjects[item1].getHitbox()[0]:
                     potentialColls.append([item1, item2])
+                    activeObjects[item1].hitBy(activeObjects[item2])
+                    activeObjects[item2].hitBy(activeObjects[item1])                    
+                    print("Hay colisiones")
     return potentialColls
 
 
 def compare(case):
-    for x in range(case[0].getPosition()[1], case[1].getPosition()[1] + case[1].getHeight()):
+    for x in range(case[0].getPosition()[1], case[1].getPosition()[1] + case[1].getHitbox()[1]):
         aux = []
-        for y in range(case[0].getPosition()[0], case[1].getPosition()[0] + case[1].getWidth()):
+        for y in range(case[0].getPosition()[0], case[1].getPosition()[0] + case[1].getHitbox()[0]):
             aux.append(0)
         table.append(aux)
     
     for item in case:
-        spriteArray = arrayOf(item.getSprite)
-        for line in range(item.getPosition[0] - case[0].getPosition()[0], item.getHeight):
-            for column in range(item.getPosition[1]- case[0].getPosition()[1], item.getWidth):
+        spriteArray = arrayOf(item.getSprite())
+        for line in range(item.getPosition[0] - case[0].getPosition()[0], item.getHitbox()[1]):
+            for column in range(item.getPosition[1]- case[0].getPosition()[1], item.getHitbox[0]):
                 if spriteArray[line - item.getPosition[0] - case[0].getPosition()[0]][column - item.getPosition[1]- case[0].getPosition()[1]] == 1:
                     table[line][column] += 1
         

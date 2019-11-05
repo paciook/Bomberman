@@ -8,8 +8,9 @@ class Thorman(thing):
         self.name = name
         self.stepSize = 5
         self.direction = '275'
-        # self.widht = qcyo
-        # self.coordenates = 
+        self.hitbox = [128, 128] #widht, height
+        self.hp = 1
+        self.damage = 0
     
     def getDirection(self):
         return self.direction
@@ -44,3 +45,6 @@ class Thorman(thing):
 
     def getThormanPosition(self):
         return self.getPosition
+    
+    def getHitbox(self):
+        return self.hitbox
