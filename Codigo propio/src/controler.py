@@ -26,7 +26,7 @@ class Controler():
         self.mapArray = []
         self.collisions = []
         self.thormanMoving = True
-        self.xd = True
+        self.initialFlip = True
         # --------- THREADS -----------
         self.bombsTimeThread = bombsThread.bombTimeCounter(daemon=True)
         self.bombsThreadRun = threading.Thread(target=self.bombsTimeThread.run)
@@ -79,17 +79,17 @@ class Controler():
                     if self.thormanMoving == True:
                         dispatcher.send(signal = "Not Moving", sender = 'Controler')
                         self.thormanMoving = False
-            
-            colls.closeness(self.activeObjects)
+
+            # colls.closeness(self.activeObjects)
 
             #for potencialColl in colls.closeness(self.activeObjects):
             #    colls.compare(potencialColl)
             # for item in self.activeObjects:
             #     colls.placeObject(item)
             # colls.verifyColls()
-            if self.xd == True:
+            if self.initialFlip == True:
                 pygame.display.flip()
-                self.xd = False
+                self.initialFlip = False
     # --------- LIGHTNINGS(EXPLOTIONS) -----------
     def reloadExplotionSprite(self, explotionNumber):
         self.visual.reloadEverything()
@@ -130,10 +130,7 @@ class Controler():
         pygame.display.flip()
 
     def loadImages(self):
-        self.visual.loadBackgroundImage('../assets/Wallpaper.jpg')
-        self.visual.loadThormanImage('../assets/Thorman/ThormanRight1.png',
-                                     (2, 2))
-        self.visual.loadLimit()
+        self.visual.loadImages()
         return None
 
     def getMapArray(self):
