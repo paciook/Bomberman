@@ -42,17 +42,23 @@ def arrayOf(pathOfFile):
 
 def closeness(activeObjects):
     potentialColls = []
-    for item1 in range(0, len(activeObjects)):
-        for item2 in range(0, len(activeObjects)):
-            if item1 == item2:
+    for activeObject1 in activeObjects:
+        for activeObject2 in activeObjects:
+            if activeObject1 == activeObject2:
                 pass     
             else:
-                if activeObjects[item2].getPosition()[0] > activeObjects[item1].getPosition()[0] and activeObjects[item2].getPosition()[0] < activeObjects[item1].getPosition()[0] + activeObjects[item1].getHitbox()[0]:
-                    potentialColls.append([item1, item2])
-                    activeObjects[item1].hitBy(activeObjects[item2])
-                    activeObjects[item2].hitBy(activeObjects[item1])                    
-                    print("Hay colisiones")
-    return potentialColls
+                
+                object1 = [activeObject1.getPosition()[0] + activeObject1.getHitbox()[0], 
+                activeObject1.getPosition()[1] + activeObject1.getHitbox()[1]]
+                object2 = [activeObject2.getPosition()[0] + activeObject2.getHitbox()[0],
+                activeObject2.getPosition()[1] + activeObject2.getHitbox()[1]]
+                
+                if activeObject1.getPosition()[0] < activeObject2.getPosition()[0] and object1[0] < activeObject2.getPosition()[0]:
+                    if activeObject1.getPosition()[1] < activeObject2.getPosition()[1] and object1[1] < activeObject2.getPosition()[1]:
+
+                        activeObject2.hitBy(activeObject1)
+                        activeObject1.hitBy(activeObject2)                    
+                        print("Hay colisiones")
 
 
 def compare(case):

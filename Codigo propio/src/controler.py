@@ -1,5 +1,5 @@
 from visual import Visual
-import thormanSpritesThread
+import sys
 import bombsThread
 import time
 import game
@@ -23,18 +23,16 @@ class Controler():
         self.activeObjects.append(self.game.createThorman())
         self.visual = Visual(self.dimentions, self.game)
         self.loadImages()
-        self.mapArray = []
-        self.collisions = []
         self.thormanMoving = True
-        self.xd = True
+        self.firstFlip = True
+        self.bombs = None
         # --------- THREADS -----------
-        self.bombsTimeThread = bombsThread.bombTimeCounter(daemon=True)
-        self.bombsThreadRun = threading.Thread(target=self.bombsTimeThread.run)
-        self.bombsThreadRun.start()
+        self.bombsTimeThreadRun = bombsThread.bombTimeCounter(daemon=True)
+        # self.bombsThreadRun = threading.Thread(target=self.bombsTimeThread.run)
+        self.bombsTimeThreadRun.start()
         self.explotionNumber = 0
         self.bombsExplotionThreadList = []
         self.thormanStandingThreadRun = thormanStandingThread.standingStill(daemon=True)
-        # self.thormanStandingThreadRun = threading.Thread(target=self.thormanStandingThread.run)
         self.thormanStandingThreadRun.start()
         self.thormanStandingThreadStarted = False
         # -----------------------------
@@ -44,11 +42,9 @@ class Controler():
         dispatcher.connect(receiver = self.reloadThorman, signal = "Stand Still", sender = 'thormanStandingThread' )
         dispatcher.connect(receiver=self.flip, signal = 'Finished')
         self.mainLoop()
-        self.bombs = None
 
     def mainLoop(self):
         while True:
-            # self.mapArray = colls.arrayOf(border)
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     sys.exit(0)
@@ -77,19 +73,13 @@ class Controler():
                 else:
                     self.game.setThormanDirection('Standing Still')
                     if self.thormanMoving == True:
-                        dispatcher.send(signal = "Not Moving", sender = 'Controler')
-                        self.thormanMoving = False
-
-            # colls.closeness(self.activeObjects)
-
-            #for potencialColl in colls.closeness(self.activeObjects):
-            #    colls.compare(potencialColl)
-            # for item in self.activeObjects:
-            #     colls.placeObject(item)
-            # colls.verifyColls()
-            if self.xd == True:
+                       dispatcher.send(signal = "Not Moving", sender = 'Controler')
+                       self.thormanMoving = False
+            if self.firstFlip == True:
                 pygame.display.flip()
-                self.xd = False
+                self.firstFlip = False
+            colls.closeness(self.activeObjects)
+
     # --------- LIGHTNINGS(EXPLOTIONS) -----------
     def reloadExplotionSprite(self, explotionNumber):
         self.visual.reloadEverything()
@@ -104,6 +94,7 @@ class Controler():
         self.visual.reloadEverything()
 
     # --------- MJOLNIR(BOMBS) -----------
+
     def reloadBombsThread(self):
         # acá estamos creando una bocha de threads
         # yo haría una lista de thread
@@ -136,17 +127,8 @@ class Controler():
         self.visual.loadLimit()
         return None
 
-    def getMapArray(self):
-        return self.mapArray
-
-    def setMapArray(self, mapArray):
-        self.mapArray = mapArray
-
     def appendActiveObject(self, newFriend):
         self.activeObjects.append(newFriend)
-
-    # def addCollision(coll):
-    #     self.collisions.append(coll)
 
 if __name__ == "__main__":
     controler = Controler()

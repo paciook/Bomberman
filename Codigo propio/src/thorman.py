@@ -48,3 +48,6 @@ class Thorman(thing):
     
     def getHitbox(self):
         return self.hitbox
+
+    def getPosition(self):
+        return self.position

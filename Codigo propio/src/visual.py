@@ -1,5 +1,4 @@
 import pygame
-from thormanSpritesThread import thormanSpritesThread
 from PIL import Image
 from pygame.locals import *
 import thorman
@@ -21,7 +20,6 @@ class Visual():
         self.thorman = None
         self.thorman = pygame.image.load("../assets/Thorman/ThormanRight1.png")
         self.thormanDirection = None
-        self.thormanSpritesThread = thormanSpritesThread()
         self.fixedWall = pygame.image.load("../assets/Wallpaper.png")
         fixedWallSize = Image.open("../assets/Walls.png")
         self.bomb = pygame.image.load('../assets/Mjolnir.png')

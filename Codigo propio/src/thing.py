@@ -1,7 +1,6 @@
 class thing:
     def __init__(self, position=[0, 0]):
         self.position = position
-        self.sprite = 'path/to/sprite'
         self.hitbox = [0, 0]
 
     def getPosition(self):
@@ -21,9 +20,6 @@ class thing:
 
     def getDamage(self):
         return self.damage
-
-    def getSprite(self):
-        return self.sprite
 
     def getHitbox(self):
         return self.hitbox
