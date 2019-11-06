@@ -11,7 +11,7 @@ class Game():
         self.activeBombList = []
         self.availableBombs = 5
         self.explodingBombsList = []
-
+        self.enemyList=[]
 
     # --------- THORMAN -----------
 
@@ -37,10 +37,6 @@ class Game():
 
     def getThormanPosition(self):
         return self.thorman.getPosition()
-
-
-    # -------------------------------------
-
 
     # --------- MJOLNIR (BOMBS) -----------
 
@@ -75,3 +71,8 @@ class Game():
 
     def setExplotionSprite(self, explotionNumber):
         self.explodingBombsList[explotionNumber].setSpriteNumber()
+
+ # --------- HULKS (ENEMIES) -----------
+    def addEnemy(self):
+        enemy = self.thorman.createEnemy([100, 100])
+        self.enemyList.append(enemy)
