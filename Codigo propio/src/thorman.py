@@ -1,7 +1,7 @@
 from thing import thing
 from bomb import Bomb
 from lightning import Lightning
-
+from enemy import Enemy
 class Thorman(thing):
     def __init__(self, name, pos=[0, 0]):
         self.position = pos
@@ -48,3 +48,7 @@ class Thorman(thing):
     
     def getHitbox(self):
         return self.hitbox
+
+    def createEnemy(self, position):
+        enemy = Enemy(position)
+        return enemy
