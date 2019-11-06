@@ -79,8 +79,8 @@ class Controler():
                     if self.thormanMoving == True:
                         dispatcher.send(signal = "Not Moving", sender = 'Controler')
                         self.thormanMoving = False
-            
-            colls.closeness(self.activeObjects)
+
+            # colls.closeness(self.activeObjects)
 
             #for potencialColl in colls.closeness(self.activeObjects):
             #    colls.compare(potencialColl)

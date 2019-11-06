@@ -16,6 +16,8 @@ class Visual():
         self.dimentions = dimentions
         self.background = None
         self.screen = pygame.display.set_mode(dimentions)
+        self.reloadEverythingTimes = 0
+        self.reloadEverythingExecuting = False
         self.thorman = None
         self.thorman = pygame.image.load("../assets/Thorman/ThormanRight1.png")
         self.thormanDirection = None
@@ -83,10 +85,20 @@ class Visual():
                 self.lightning = pygame.image.load("../assets/Lightning/Lightning" + str(eachLightning.getSpriteNumber()) + ".png")
                 self.screen.blit(self.lightning, eachLightning.getPosition())
 
-    def reloadEverything(self):
-        self.reloadBackground()
-        self.reloadBombs()
-        self.changeThormanSprite()
-        self.reloadExplotionSprite()
-        self.loadLimit()
-        dispatcher.send(signal = 'Finished')
+    def reloadEverything(self):        
+            self.reloadEverythingTimes += 1
+            if self.reloadEverythingExecuting is False:
+                while self.reloadEverythingTimes >= 1:
+                    self.reloadEverythingExecuting = True
+                    self.reloadBackground()
+                    self.reloadBombs()
+                    self.changeThormanSprite()
+                    self.reloadExplotionSprite()
+                    self.loadLimit()
+                    dispatcher.send(signal = 'Finished')
+                    if self.reloadEverythingTimes > 0:
+                        self.reloadEverythingTimes -= 1
+                    self.reloadEverythingExecuting = False
+                # pygame.display.flip()
+            else:
+                pass
