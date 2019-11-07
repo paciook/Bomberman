@@ -49,11 +49,6 @@ class Thorman(thing):
     def getHitbox(self):
         return self.hitbox
 
-<<<<<<< HEAD
-    def getPosition(self):
-        return self.position
-=======
     def createEnemy(self, position):
         enemy = Enemy(position)
         return enemy
->>>>>>> 087574e293610ed12d530571fada8e60761e42f4

@@ -8,5 +8,5 @@ class ticker(threading.Thread):
 
     def run(self):
         while True:
-            time.sleep(0.05)
+            time.sleep(0.0005)
             dispatcher.send(signal='Tick')

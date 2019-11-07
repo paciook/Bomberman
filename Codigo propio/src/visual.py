@@ -20,7 +20,7 @@ class Visual():
         self.thorman = None
         self.thorman = pygame.image.load("../assets/Thorman/ThormanRight1.png")
         self.thormanDirection = None
-        self.fixedWall = pygame.image.load("../assets/Wallpaper.png")
+        self.fixedWall = pygame.image.load("../assets/Walls.png")
         fixedWallSize = Image.open("../assets/Walls.png")
         self.bomb = pygame.image.load('../assets/Mjolnir.png')
         self.fixedWallSize = fixedWallSize.size

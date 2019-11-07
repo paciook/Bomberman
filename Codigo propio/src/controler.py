@@ -1,9 +1,6 @@
 from visual import Visual
-<<<<<<< HEAD
 import sys
-=======
 import enemyThread
->>>>>>> 087574e293610ed12d530571fada8e60761e42f4
 import bombsThread
 import time
 import game
@@ -30,19 +27,13 @@ class Controler():
         self.loadImages()
         self.thormanMoving = True
         self.firstFlip = True
-<<<<<<< HEAD
-        self.bombs = None
-        # --------- THREADS -----------
-        self.bombsTimeThreadRun = bombsThread.bombTimeCounter(daemon=True)
-        # self.bombsThreadRun = threading.Thread(target=self.bombsTimeThread.run)
-        self.bombsTimeThreadRun.start()
-=======
+        self.goForward = True
+
         # --------- THREADS -----------
         self.ticker = tickerThread.ticker(daemon=True)
         self.ticker.start()
-        self.bombsTimeThread = bombsThread.bombTimeCounter(daemon=True)
-        self.bombsThreadRun.start()
->>>>>>> 087574e293610ed12d530571fada8e60761e42f4
+        self.bombsTimeThreadRun = bombsThread.bombTimeCounter(daemon=True)
+        self.bombsTimeThreadRun.start()
         self.explotionNumber = 0
         self.bombsExplotionThreadList = []
         self.thormanStandingThreadRun = thormanStandingThread.standingStill(daemon=True)
@@ -54,20 +45,17 @@ class Controler():
         dispatcher.connect(receiver = self.delExplotionSprite, signal = "Delete Explotion", sender = 'bombsExplotionThread' )
         dispatcher.connect(receiver = self.reloadThorman, signal = "Stand Still", sender = 'thormanStandingThread' )
         dispatcher.connect(receiver=self.flip, signal = 'Finished')
-        dispatcher.connect(receiver=self.avanzarx, signal = 'Tick')
+        dispatcher.connect(receiver=self.goForwardDef, signal = 'Tick')
         self.mainLoop()
 
-    def avanzarx(self):
-        self.avanzar = True
+    def goForwardDef(self):
+        self.goForward = True
 
     def mainLoop(self):
         # self.game.createEnemies()
         while True:
-<<<<<<< HEAD
-=======
-            if self.avanzar == False:
+            if self.goForward == False:
                 continue
->>>>>>> 087574e293610ed12d530571fada8e60761e42f4
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     sys.exit(0)
@@ -91,28 +79,19 @@ class Controler():
                     else:
                         try:
                             self.game.setThormanDirection(str(event.key))
-                            self.visual.reloadEverything()
                         except Exception:
                             pass
                 else:
                     self.game.setThormanDirection('Standing Still')
                     if self.thormanMoving == True:
-<<<<<<< HEAD
-                       dispatcher.send(signal = "Not Moving", sender = 'Controler')
-                       self.thormanMoving = False
-            if self.firstFlip == True:
-                pygame.display.flip()
-                self.firstFlip = False
-            colls.closeness(self.activeObjects)
-
-=======
                         dispatcher.send(signal = "Not Moving", sender = 'Controler')
                         self.thormanMoving = False
+                self.visual.reloadEverything()
             if self.firstFlip == True:
                 pygame.display.flip()
                 self.firstFlip = False
-            avanzar = False
->>>>>>> 087574e293610ed12d530571fada8e60761e42f4
+            self.goForward = False
+
     # --------- LIGHTNINGS(EXPLOTIONS) -----------
     def reloadExplotionSprite(self, explotionNumber): 
         self.visual.reloadEverything()
@@ -141,7 +120,6 @@ class Controler():
         self.explotionNumber += 1
         self.game.addExplodingBombs()
         self.game.removeBombs()
-        self.visual.reloadEverything()
     # --------- THORMAN(BOMBERMAN) -----------
 
     def reloadThorman(self):
