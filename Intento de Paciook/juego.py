@@ -12,11 +12,11 @@ class Juego():
         self.mapArray = []
         self.nombre = nombre_jugador
         self.dimensiones = dimensiones
+        self.iniciarArray()
         self.thorman = intentodepacio.Thorman(self.nombre)
         self.objetosActivos = [self.thorman]
         self.bombasActivas = []
         self.muros = []
-        self.iniciarArray()
         self.serTrump()
         self.explosionesActivas = []
 
@@ -77,15 +77,13 @@ class Juego():
                 if x == 0 or y == 0:
                     aux[x][y].setContenido(muro([x * 70, y * 70]))
                     self.muros.append(aux[x][y].getContenido())
-                
-                if x > 1 and y > 1 and x // 2 == 0 and y // 2 == 0:
+                elif x > 1 and y > 1 and x % 2 == 0 and y % 2 == 0:
                     aux[x][y].setContenido(muro([x * 70, y * 70]))
                     self.muros.append(aux[x][y].getContenido())                    
-
-                if x == self.dimensiones[0]/70 - 1 or y == self.dimensiones[1]/70 - 1:
+                elif x == self.dimensiones[0]/70 - 1 or y == self.dimensiones[1]/70 - 1:
                     aux[x][y].setContenido(muro([x * 70, y * 70]))
                     self.muros.append(aux[x][y].getContenido())                    
-                
+        self.mapArray = aux
 
     def getExplosiones(self):
         return self.explosionesActivas
@@ -112,7 +110,7 @@ class Juego():
 
         pos = [int((posicion[0] + 35) / 70), int((posicion[1] + 35) / 70)]
         celda = self.getCelda(pos)
-        pos = [pos[0] * 70, pos[1] * 70]
+        pos = [pos[0] * 70 + 1, pos[1] * 70 + 1]
         
         respuesta = [celda, pos]
 
@@ -122,8 +120,9 @@ class Juego():
         return self.mapArray[posicion[0]][posicion[1]]
 
     def puedoPonerEn(self, posicion):
-        return True
-        # if type(self.equivalenteCelda(posicion)[0].getContenido()) == type("None"):
-        #     return True
-        # else:
-        #     return False
+        # return True
+        cosa = self.equivalenteCelda(posicion)[0].getContenido()
+        if cosa == None:
+            return True
+        else:
+            return False
