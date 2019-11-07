@@ -1,7 +1,6 @@
 import pygame
 from pygame.locals import *
 from intentodepacio import Thorman # La vista conoce al modelo, pero el modelo no a la vista. Vista sólo puede "consultar" al modelo, no debe hacer que ejecute acciones.
-import PIL
 
 class Vista():
 

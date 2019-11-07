@@ -122,7 +122,8 @@ class Juego():
         return self.mapArray[posicion[0]][posicion[1]]
 
     def puedoPonerEn(self, posicion):
-        if type(self.equivalenteCelda(posicion)[0].getContenido()) == type("None"):
-            return True
-        else:
-            return False
+        return True
+        # if type(self.equivalenteCelda(posicion)[0].getContenido()) == type("None"):
+        #     return True
+        # else:
+        #     return False
