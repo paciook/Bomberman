@@ -1,7 +1,7 @@
 import pygame
 from pygame.locals import *
 from intentodepacio import Thorman # La vista conoce al modelo, pero el modelo no a la vista. Vista sólo puede "consultar" al modelo, no debe hacer que ejecute acciones.
-
+import PIL
 
 class Vista():
 
@@ -13,23 +13,53 @@ class Vista():
         self.dimensiones=dimensiones
         self.fondo = None
         self.screen = pygame.display.set_mode(dimensiones)
-        self.bomberman = None
+        self.thorman = None
+        self.bomba = None
+        self.muro = None
+        self.explosion = None
 
         pygame.key.set_repeat(20) # para que procese eventos cuando se mantiene una tecla apretada
 
         
 
-    def carga_imagen_fondo(self, direccion_fondo):
-        self.fondo = pygame.image.load(direccion_fondo)
+    def carga_imagen_fondo(self):
         self.screen.blit(self.fondo, [0,0])
     
     def recargarFondo(self):
         self.screen.blit(self.fondo, [0,0])
 
-    def cargar_imagen_bomberman(self, sprite, pos):
-        self.bomberman = pygame.image.load(sprite)
+    def cargar_imagen_bomberman(self, pos):
         self.pos_bomberman = pos
-        self.screen.blit(self.bomberman, pos)
+        self.screen.blit(self.thorman, pos)
 
     def recargarThor(self):
-        self.screen.blit(self.bomberman, self.juego.getThorPosicion())
+        self.screen.blit(self.thorman, self.juego.getThorPosicion())
+
+    def loadSprites(self):
+        self.fondo = pygame.image.load('Wallpaper.jpg')
+        self.thorman = pygame.image.load('bmsprite.png')
+        self.bomba = pygame.image.load('Mjolnir.png')
+        self.muro = pygame.image.load('muro.png')
+        self.explosion = pygame.image.load('explosion.png')
+
+    def cargarBombas(self, listaBombas):
+        
+        for bomba in listaBombas:
+            self.mostrarBomba(bomba.getPosicion())
+
+    def mostrarBomba(self, posicion):
+        self.screen.blit(self.bomba, posicion)
+        # print(posicion)
+
+    def cargarExplosiones(self, listaExplosiones):
+        
+        for explosion in listaExplosiones:
+            self.mostrarExplosion(explosion.getPosicion())
+
+    def mostrarExplosion(self, posicion):
+        self.screen.blit(self.explosion, posicion)
+        # print(posicion)
+
+    def cargarMuros(self, muros):
+        for muro in muros:
+            self.screen.blit(self.muro, muro.getPosicion())

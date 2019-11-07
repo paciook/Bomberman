@@ -1,13 +1,13 @@
 class thing:
     def __init__(self, position=[0, 0]):
-        self.position = position
+        self.posicion = position
         self.hitbox = [0, 0]
 
-    def getPosition(self):
+    def getPosicion(self):
         return self.posicion
 
-    def setPosition(self, position):
-        self.position = position
+    def setPosicion(self, position):
+        self.posicion = position
 
     def hitBy(self, obstacle):
         self.hp = self.hp - obstacle.getDamage()
@@ -18,8 +18,8 @@ class thing:
     def kill(self):
         pass
 
-    def getDamage(self):
-        return self.damage
-
     def getHitbox(self):
         return self.hitbox
+
+    def getPosicion(self):
+        return self.posicion
