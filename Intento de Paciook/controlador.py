@@ -12,11 +12,10 @@ class Controlador:
     def __init__(self):
         # El controlador inicializa el juego
         # y la vista.
-        self.dimensiones = (1280, 720)
+        self.dimensiones = (1260, 700)
         self.juego = juego.Juego('Fede', self.dimensiones)
         self.vista = vista.Vista(self.dimensiones, self.juego)
         self.sleep = 0.005
-        self.juego.serTrump()
 
         self.vista.loadSprites()
         self.vista.carga_imagen_fondo()
@@ -63,9 +62,9 @@ class Controlador:
                 contador += 1
                 self.juego.explotarBomba()
 
-            if contador == 400:
+            if contador == 300:
                 contador = 0
-                self.juego.BOCAYOTEAMO()
+                self.juego.apagarExplosion()
             
             if len(self.juego.getExplosiones()) != 0: contador += 1
             print(contador)
@@ -83,6 +82,7 @@ class Controlador:
         self.vista.recargarThor()
         self.vista.cargarMuros(self.juego.getMuros())
         pygame.display.flip()
+
 
 
 

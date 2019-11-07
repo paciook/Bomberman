@@ -4,7 +4,7 @@ from bomba import bomba
 
 
 class Thorman(thing):
-    def __init__(self, name, pos=[50, 50]):
+    def __init__(self, name, pos=[80, 80]):
         self.posicion = pos
         self.name = name
         self.stepSize = 4
