@@ -31,11 +31,10 @@ class Controlador:
             for event in pygame.event.get():
                
                 if event.type == pygame.QUIT: sys.exit()
-                #self.juego.mover_bm(event.tevent_name())
+
                
                 if event.type==pygame.KEYDOWN: # alguien presionó una tecla
-                    #print(pygame.event.event_name(event.type))
-                    #print(event.key)
+
                     if str(event.key)=='32':
 
                         self.juego.plantarBomba()
@@ -47,15 +46,9 @@ class Controlador:
                         else:
                             print(str(event.key))
             
-                    # self.vista.recargarFondo()
-                    # self.vista.recargarThor()
-            
-            # self.vista.cargarBombas(self.juego.getBombas())
-            # pygame.display.flip()
             
             if len(self.juego.getBombas()) != 0:
                 contador += 1
-                # print(contador)
                 print(self.juego.getBombas()[0].getPosicion())
             
             if contador == 200:

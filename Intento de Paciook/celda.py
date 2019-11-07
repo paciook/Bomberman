@@ -1,6 +1,6 @@
 class celda():
     def __init__(self):
-        self.contenido = "None"
+        self.contenido = None
 
     def getContenido(self):
         return self.contenido
