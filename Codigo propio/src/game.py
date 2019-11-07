@@ -9,12 +9,11 @@ class Game():
         self.dimentions = dimentions
         self.thorman = None
         self.activeBombList = []
-        self.availableBombs = 5
+        self.availableBombs = 5 # The number of bombs Thorman can plant
         self.explodingBombsList = []
         self.enemyList=[]
 
     # --------- THORMAN -----------
-
     def createThorman(self):
         self.thorman = Thorman(self.name)
         return self.thorman
@@ -25,13 +24,6 @@ class Game():
     def setThormanDirection(self, direction):
         self.thorman.setDirection(direction)
 
-    def positionIsValid(self, direction):
-        newPos = self.thorman.getNewTentativePosition(direction)
-        print('newPos', newPos)
-        comparison = [val < self.dimentions[i] for i, val in enumerate(newPos)]
-        print(comparison[0], comparison[1], newPos[0] > 0, newPos[1] > 0)
-        return comparison[0]*comparison[1]*(newPos[0] >= 0)*(newPos[1] >= 0)
-
     def moveThorman(self, direction):
         self.thorman.move(direction)
 
@@ -39,8 +31,8 @@ class Game():
         return self.thorman.getPosition()
 
     # --------- MJOLNIR (BOMBS) -----------
-
     def plantBomb(self):
+        """Creates an object 'bomb' and appends it to a list"""
         theBomb = self.thorman.plantBomb()
         self.activeBombList.append(theBomb)
         self.availableBombs -= 1
@@ -50,6 +42,7 @@ class Game():
         return self.activeBombList
 
     def removeBombs(self):
+        """Removes the first bombs of the list"""
         self.activeBombList.pop(0)
         self.availableBombs += 1
 
@@ -70,7 +63,7 @@ class Game():
         self.explodingBombsList.pop(0)
 
     def setExplotionSprite(self, explotionNumber):
-        self.explodingBombsList[explotionNumber].setSpriteNumber()
+        self.explodingBombsList[explotionNumber].setSpriteNumber() # Every lightning has an attribute self.spriteNumber that indicates the sprite that must be showed by visual
 
  # --------- HULKS (ENEMIES) -----------
     def addEnemy(self):

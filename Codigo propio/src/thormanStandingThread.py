@@ -11,6 +11,7 @@ class standingStill(threading.Thread):
         self.moving = False
 
     def run(self):
+        """Sends a message every time it has to change the standing Thorman sprite"""
         while True:
             if self.moving == True:
                 pass

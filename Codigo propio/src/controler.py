@@ -1,11 +1,8 @@
 from visual import Visual
-import sys
-import enemyThread
 import bombsThread
 import time
 import game
 import pygame
-import tickerThread
 import bombsExplotionThread
 import Collisions as colls
 import threading
@@ -25,43 +22,33 @@ class Controler():
         self.activeObjects.append(self.game.createThorman())
         self.visual = Visual(self.dimentions, self.game)
         self.loadImages()
+        self.mapArray = []
+        self.collisions = []
         self.thormanMoving = True
         self.firstFlip = True
 
-        self.bombs = None
         # --------- THREADS -----------
-        self.bombsTimeThreadRun = bombsThread.bombTimeCounter(daemon=True)
-        # self.bombsThreadRun = threading.Thread(target=self.bombsTimeThread.run)
-        self.bombsTimeThreadRun.start()
-
-         # --------- THREADS -----------
-         self.ticker = tickerThread.ticker(daemon=True)
-         self.ticker.start()
-         self.bombsTimeThread = bombsThread.bombTimeCounter(daemon=True)
-         self.bombsThreadRun.start()
-
+        self.bombsTimeThread = bombsThread.bombTimeCounter(daemon=True)
+        self.bombsThreadRun = threading.Thread(target=self.bombsTimeThread.run)
+        self.bombsThreadRun.start()
         self.explotionNumber = 0
         self.bombsExplotionThreadList = []
         self.thormanStandingThreadRun = thormanStandingThread.standingStill(daemon=True)
         self.thormanStandingThreadRun.start()
-        self.enemiesThreadList = []
+        self.thormanStandingThreadStarted = False
         # -----------------------------
         dispatcher.connect(receiver=self.explodeBomb, signal='Exploded', sender='bombsThread')
         dispatcher.connect(receiver = self.reloadExplotionSprite, signal = 'Change Explotion Sprite', sender = 'bombsExplotionThread' )
         dispatcher.connect(receiver = self.delExplotionSprite, signal = "Delete Explotion", sender = 'bombsExplotionThread' )
         dispatcher.connect(receiver = self.reloadThorman, signal = "Stand Still", sender = 'thormanStandingThread' )
         dispatcher.connect(receiver=self.flip, signal = 'Finished')
-        dispatcher.connect(receiver=self.avanzarx, signal = 'Tick')
         self.mainLoop()
-
-    def avanzarx(self):
-        self.avanzar = True
+        self.bombs = None
 
     def mainLoop(self):
-        # self.game.createEnemies()
+        """Main loop that recognizes whenever an event (key pressed or not)
+        in pygame is executed"""
         while True:
-            if self.avanzar == False:
-                continue
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     sys.exit(0)
@@ -80,34 +67,24 @@ class Controler():
                         self.game.moveThorman(CONTROLS['274'])
                     if keys[pygame.K_SPACE]:
                         if self.game.getAvailableBombs() != 0:
+                            # self.game.plantBomb()
                             self.activeObjects.append(self.game.plantBomb())
                             self.reloadBombsThread()
                     else:
-                        try:
-                            self.game.setThormanDirection(str(event.key))
-                            self.visual.reloadEverything()
-                        except Exception:
-                            pass
+                        self.game.setThormanDirection(str(event.key))
+                    self.visual.reloadEverything()
                 else:
                     self.game.setThormanDirection('Standing Still')
                     if self.thormanMoving == True:
-
-                       dispatcher.send(signal = "Not Moving", sender = 'Controler')
-                       self.thormanMoving = False
-            if self.firstFlip == True:
-                pygame.display.flip()
-                self.firstFlip = False
-            colls.closeness(self.activeObjects)
-
                         dispatcher.send(signal = "Not Moving", sender = 'Controler')
                         self.thormanMoving = False
-            if self.firstFlip == True:
+            if self.firstFlip == True: # Does the first visual flip
                 pygame.display.flip()
                 self.firstFlip = False
-            avanzar = False
 
     # --------- LIGHTNINGS(EXPLOTIONS) -----------
-    def reloadExplotionSprite(self, explotionNumber): 
+    def reloadExplotionSprite(self, explotionNumber):
+        """Send to game the order to change the sprite of the explotion"""
         self.visual.reloadEverything()
         if explotionNumber == 3:
             pass
@@ -115,18 +92,19 @@ class Controler():
             self.game.setExplotionSprite(explotionNumber)
 
     def delExplotionSprite(self, explotionNumber):
+        """Once the explotion time is finished,
+        deletes the lightning from the list"""
         self.explotionNumber -= 1
         self.game.delExplodingBomb(explotionNumber)
         self.visual.reloadEverything()
 
     # --------- MJOLNIR(BOMBS) -----------
-
     def reloadBombsThread(self):
-        # acá estamos creando una bocha de threads
-        # yo haría una lista de thread
+        """Sends the message to the thread to count a new bomb"""
         dispatcher.send(signal='Add Bomb', sender='Controler')
 
     def explodeBomb(self):
+        """Creates a new thread for the lightning every time a bombs finishes its time"""
         dispatcher.send(signal='Start Changing Explotion Sprites', sender='Controler')
         bombsExplotionThreadRun = bombsExplotionThread.bombAnimation(daemon=True, explotionNumber=self.explotionNumber)
         self.bombsExplotionThreadList.append(bombsExplotionThreadRun)
@@ -135,23 +113,19 @@ class Controler():
         self.game.addExplodingBombs()
         self.game.removeBombs()
         self.visual.reloadEverything()
+
     # --------- THORMAN(BOMBERMAN) -----------
-
     def reloadThorman(self):
+        """Reloads the visual every time it is called"""
         self.visual.reloadEverything()
-    
-    # --------- HULKS (ENEMIES) -----------
 
-    def createEnemyThread(self):
-        enemyThread = enemyThread.enemy(daemon=True)
-        self.enemiesThreadList.append(enemyThread)
-        enemyThread.start()
-        self.game.addEnemy()
     # --------- OTHERS -----------
     def flip(self):
+        """Flips every time it is called"""
         pygame.display.flip()
 
     def loadImages(self):
+        """Loads the first background and Thor image"""
         self.visual.loadBackgroundImage('../assets/Wallpaper.jpg')
         self.visual.loadThormanImage('../assets/Thorman/ThormanRight1.png',
                                      (2, 2))
@@ -159,6 +133,7 @@ class Controler():
         return None
 
     def appendActiveObject(self, newFriend):
+        """"""
         self.activeObjects.append(newFriend)
 
 if __name__ == "__main__":

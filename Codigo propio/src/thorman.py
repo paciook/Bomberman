@@ -6,52 +6,44 @@ class Thorman(thing):
     def __init__(self, name, pos=[0, 0]):
         self.position = pos
         self.name = name
-        self.stepSize = 5
+        self.stepSize = 5 # The distance it moves when the key is pressed
         self.direction = '275'
         self.hitbox = [128, 128] #widht, height
         self.hp = 1
         self.damage = 0
-    
+
+    # --------- THORMAN -----------
     def getDirection(self):
         return self.direction
 
     def setDirection(self, direction):
         self.direction = direction
 
-    def createLightning(self, position):
-        lightning = Lightning(position)
-        return lightning
-
     def move(self, direction):
+        """Moves the Thorman"""
         for index, item in enumerate(self.position):
             self.position[index] = item + self.stepSize*direction[index]
 
     def getStepsize(self):
         return self.stepSize
-
-    def setStepsize(self, NewStep):
-        self.stepSize = NewStep
-
-    def getNewTentativePosition(self, direction):
-        print('direction', direction)
-        auxList = []
-        for index, item in enumerate(self.position):
-            auxList.append(item+self.stepSize * direction[index])
-        return auxList
-
-    def plantBomb(self):
-        theBomb = Bomb(self.position)
-        return theBomb
-
+    
     def getThormanPosition(self):
         return self.getPosition
-    
-    def getHitbox(self):
-        return self.hitbox
 
     def getPosition(self):
         return self.position
 
+    # --------- LIGHTNINGS(EXPLOTIONS) -----------
+    def createLightning(self, position):
+        lightning = Lightning(position)
+        return lightning
+
+    # --------- MJOLNIR(BOMBS) -----------
+    def plantBomb(self):
+        theBomb = Bomb(self.position)
+        return theBomb
+
+    # --------- HULK(ENEMY) -----------
     def createEnemy(self, position):
         enemy = Enemy(position)
         return enemy

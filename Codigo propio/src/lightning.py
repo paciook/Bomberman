@@ -3,7 +3,7 @@ import copy
 
 class Lightning:
     def __init__(self, position):
-        self.position = copy.deepcopy(position)
+        self.position = position
         self.spriteNumber = 0
 
     def getPosition(self):

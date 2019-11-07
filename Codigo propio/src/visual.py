@@ -29,21 +29,25 @@ class Visual():
         self.lightning = None
         dispatcher.connect(receiver = self.changeThormanSprite, signal = 'Change thorman sprite', sender = 'thormanSpritesThread' )
         pygame.key.set_repeat(5)
-        # para que procese eventos cuando se mantiene una tecla apretada
+        # Processes events if a key is being pressed
 
     def loadBackgroundImage(self, backgroundDirection):
+        """Blits the background for the firs time"""
         self.background = pygame.image.load(backgroundDirection)
         self.background = pygame.transform.scale(self.background, (1200, 600))
         self.screen.blit(self.background, [0, 0])
 
     def reloadBackground(self):
+        """Blits the background sprite"""
         self.screen.blit(self.background, [0, 0])
 
     def loadThormanImage(self, sprite, pos):
+        """Blits the Thorman image for the first time"""
         self.thorman = pygame.image.load(sprite)
         self.screen.blit(self.thorman, pos)
 
     def changeThormanSprite(self):
+        """Blits the Thorman sprites"""
         self.thormanDirection = DIRECTIONS[self.game.getThormanDirection()]
         self.spriteNumber = self.spriteNumber + 1
         if self.thormanDirection == 'Still':
@@ -58,19 +62,11 @@ class Visual():
             self.thorman = pygame.image.load("../assets/Thorman/Thorman" + str(self.thormanDirection) + str(self.spriteNumber) + ".png")
 
     def loadLimit(self):
-        self.screen.blit(self.fixedWall, [0, 0])
-        # wallQuantity = 20
-        # wallWidth = int(self.dimentions[0]/wallQuantity)
-        # self.fixedWall = pygame.transform.scale(self.fixedWall, (wallWidth, wallWidth))
-        # for ancho in range(wallQuantity):
-        #     self.screen.blit(self.fixedWall, [ancho * wallWidth, 0])
-        #     self.screen.blit(self.fixedWall, [ancho * wallWidth, self.dimentions[1] - 40])
-
-        # for alto in range((wallWidth) - 1):
-        #     self.screen.blit(self.fixedWall, [0, alto * wallWidth])
-        #     self.screen.blit(self.fixedWall, [self.dimentions[0] - wallWidth, alto * wallWidth])        
+        """Blits the bushes (limit) sprite"""
+        self.screen.blit(self.fixedWall, [0, 0])  
 
     def reloadBombs(self):
+        """Blits the bombs sprites"""
         if len(self.game.getBombs()) != 0:
             for eachBomb in self.game.getBombs():
                 self.screen.blit(self.bomb, eachBomb.getPosition())
@@ -78,25 +74,28 @@ class Visual():
             pass
 
     def reloadExplotionSprite(self):
+        """Blits the lightning sprites"""
         if len(self.game.getExplodingBomb()) != 0:
             for eachLightning in self.game.getExplodingBomb():
                 self.lightning = pygame.image.load("../assets/Lightning/Lightning" + str(eachLightning.getSpriteNumber()) + ".png")
                 self.screen.blit(self.lightning, eachLightning.getPosition())
 
-    def reloadEverything(self):        
-            self.reloadEverythingTimes += 1
-            if self.reloadEverythingExecuting is False:
-                while self.reloadEverythingTimes >= 1:
-                    self.reloadEverythingExecuting = True
-                    self.reloadBackground()
-                    self.reloadBombs()
-                    self.changeThormanSprite()
-                    self.reloadExplotionSprite()
-                    self.loadLimit()
-                    dispatcher.send(signal = 'Finished')
-                    if self.reloadEverythingTimes > 0:
-                        self.reloadEverythingTimes -= 1
-                    self.reloadEverythingExecuting = False
-                # pygame.display.flip()
-            else:
-                pass
+    def reloadEverything(self):
+        """Blits everything that must be blited and flips
+        If it is called while it is being executed, it will
+        execute itself the times it was called"""      
+        self.reloadEverythingTimes += 1
+        if self.reloadEverythingExecuting is False:
+            while self.reloadEverythingTimes >= 1:
+                self.reloadEverythingExecuting = True
+                self.reloadBackground()
+                self.reloadBombs()
+                self.changeThormanSprite()
+                self.reloadExplotionSprite()
+                self.loadLimit()
+                dispatcher.send(signal = 'Finished')
+                if self.reloadEverythingTimes > 0:
+                    self.reloadEverythingTimes -= 1
+                self.reloadEverythingExecuting = False
+        else:
+            pass
