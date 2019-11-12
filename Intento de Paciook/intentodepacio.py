@@ -7,9 +7,9 @@ class Thorman(thing):
     def __init__(self, name, pos=[80, 80]):
         self.posicion = pos
         self.name = name
-        self.stepSize = 4
+        self.stepSize = 10
         self.direction = '275'
-        self.hitbox = [128, 128] #widht, height
+        self.hitbox = [128, 128]  # [widht, height]
         self.hp = 1
         self.damage = 0
         self.BmDisp = 1
@@ -23,12 +23,6 @@ class Thorman(thing):
 
     def setStepsize(self, NewStep):
         self.stepSize = NewStep
-    
-    # def plantar(self):
-    #     pos = self.posicion
-    #     labomba = bomba(pos)
-    #     print("Bomb has been planted")
-    #     return labomba
 
     def getBmDisp(self):
         return self.BmDisp

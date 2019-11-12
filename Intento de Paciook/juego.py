@@ -23,16 +23,15 @@ class Juego():
     def moverThor(self, direccion):
         pos = list(self.thorman.getPosicion())
         self.thorman.mover(direccion)
-        if self.puedoPonerEn(self.thorman.getPosicion()) == False:
+        if self.puedoPonerEn(self.thorman.getPosicion()) is False:
             self.thorman.setPosicion(pos)
-
-        
 
     def iniciarArray(self):
         aux = []
         respuesta = []
-        for x in range (0, self.dimensiones[0], 70):
-            for y in range (0, self.dimensiones[1], 70):
+        for x in range(0, self.dimensiones[0], 70):
+            aux = []
+            for y in range(0, self.dimensiones[1], 70):
                 aux.append(celda())
             respuesta.append(aux)
         self.setMapArray(respuesta)
@@ -42,30 +41,26 @@ class Juego():
 
     def plantarBomba(self):
         if self.thorman.getBmDisp() > len(self.bombasActivas):
-            # self.bombasActivas.append(self.thorman.plantar())  
+            # self.bombasActivas.append(self.thorman.plantar())
             # self.bombasActivas.append(bomba(list(self.getThorPosicion())))
             print("Añadido a lista")
 
             pos = list(self.thorman.getPosicion())
-            celdaActual = self.equivalenteCelda(pos)
+            cel = self.equivalenteCelda(pos)
 
-            self.bombasActivas.append(celdaActual[0].setContenido(bomba(celdaActual[1])))
-
+            self.bombasActivas.append(cel[0].setContenido(bomba(cel[1])))
 
     def getBombas(self):
         return self.bombasActivas
 
     def explotarBomba(self):
-
-
         pos = list(self.bombasActivas[0].getPosicion())
-        celdaActual = self.equivalenteCelda(pos)
+        cel = self.equivalenteCelda(pos)
 
-        self.explosionesActivas.append(celdaActual[0].setContenido(explosion(celdaActual[1])))
+        self.explosionesActivas.append(cel[0].setContenido(explosion(cel[1])))
 
         # self.explosionesActivas.append(explosion(list(self.bombasActivas[0].getPosicion())))
         self.bombasActivas.pop(0)
-
 
     def getMuros(self):
         return self.muros
@@ -75,21 +70,25 @@ class Juego():
         for x in range(len(aux)):
             for y in range(len(aux[x])):
                 if x == 0 or y == 0:
+
                     aux[x][y].setContenido(muro([x * 70, y * 70]))
                     self.muros.append(aux[x][y].getContenido())
                 elif x > 1 and y > 1 and x % 2 == 0 and y % 2 == 0:
+
                     aux[x][y].setContenido(muro([x * 70, y * 70]))
-                    self.muros.append(aux[x][y].getContenido())                    
-                elif x == self.dimensiones[0]/70 - 1 or y == self.dimensiones[1]/70 - 1:
+                    self.muros.append(aux[x][y].getContenido())
+                elif x == self.dimensiones[0]/70 - 1 or \
+                        y == self.dimensiones[1]/70 - 1:
+
                     aux[x][y].setContenido(muro([x * 70, y * 70]))
-                    self.muros.append(aux[x][y].getContenido())                    
+                    self.muros.append(aux[x][y].getContenido())
+
         self.mapArray = aux
 
     def getExplosiones(self):
         return self.explosionesActivas
 
     def apagarExplosion(self):
-        
         pos = list(self.explosionesActivas[0].getPosicion())
         celdaActual = self.equivalenteCelda(pos)
 
@@ -111,18 +110,16 @@ class Juego():
         pos = [int((posicion[0] + 35) / 70), int((posicion[1] + 35) / 70)]
         celda = self.getCelda(pos)
         pos = [pos[0] * 70 + 1, pos[1] * 70 + 1]
-        
         respuesta = [celda, pos]
 
-        return respuesta 
+        return respuesta
 
     def getCelda(self, posicion):
         return self.mapArray[posicion[0]][posicion[1]]
 
     def puedoPonerEn(self, posicion):
         # return True
-        cosa = self.equivalenteCelda(posicion)[0].getContenido()
-        if cosa == None:
+        if self.equivalenteCelda(posicion)[0].getContenido() is None:
             return True
         else:
             return False

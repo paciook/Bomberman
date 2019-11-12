@@ -14,7 +14,7 @@ class thing:
         if self.hp < 1:
             self.kill()
         print("capooo")
-        
+
     def kill(self):
         pass
 
