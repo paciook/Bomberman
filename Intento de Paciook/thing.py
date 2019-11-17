@@ -29,5 +29,5 @@ class thing:
     def getImage(self):
         return self.image
 
-    def imagenInicial(self):
-        pass
+    def reaccionar(self, objeto):
+        objeto.setPosicion(objeto.getUltPos())

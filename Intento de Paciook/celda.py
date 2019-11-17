@@ -8,3 +8,7 @@ class celda():
     def setContenido(self, contenido):
         self.contenido = contenido
         return contenido
+
+    def reaccionar(self, objeto):
+        if not self.contenido is None:
+            self.contenido.reaccionar(objeto)
