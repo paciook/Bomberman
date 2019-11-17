@@ -50,7 +50,7 @@ class Juego(threading.Thread):
         self.mapArray = respuesta
 
     def plantarBomba(self):
-        if len(self.bombas) == 0:
+        if len(self.bombas) < self.thorman.getBmDisp():
             pos = list(self.thorman.getPosicion())
             cel = self.equivalenteCelda(pos)
             laBomba = bomba(pos)
@@ -103,6 +103,6 @@ class Juego(threading.Thread):
             resultados = [executor.submit(bomba.explotar) for bomba in self.bombas]
 
             for f in concurrent.futures.as_completed(resultados):
-                f.result()
-                self.objetosActivos.remove(self.bombas[0])
-                self.bombas.pop(0)
+                f.result()                                                              # Me acabo de dar cuenta de que no va a funcionar con dos bombas
+                self.objetosActivos.remove(self.bombas[0])                              # porque la agrega a la lista después de que se empiecen a ejecutar los
+                self.bombas.pop(0)                                                      # futures.results

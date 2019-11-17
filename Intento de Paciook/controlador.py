@@ -4,6 +4,7 @@ import pygame
 import sys
 from muro import muro
 import threading
+import time
 
 
 CONTROLES = {'273': [0, -1], '274': [0, 1], '275': [1, 0], '276': [-1, 0]}
@@ -28,16 +29,14 @@ class Controlador:
 
                 if event.type == pygame.KEYDOWN:  # Alguien presionó una tecla
 
-                    if str(event.key) == '32':  # Espacio
-
+                    if str(event.key) == '32':  # Espacio (cazo un sólo evento de éste tipo)
                         self.juego.plantarBomba()
-
+                        time.sleep(0.3)
                     else:
                         if str(event.key) in CONTROLES:  # Direccionamiento
                             self.juego.moverThor(CONTROLES[str(event.key)])
-
                         else:
-                            print(str(event.key))
+                            pass
 
 if __name__ == "__main__":
     controlador = Controlador()
