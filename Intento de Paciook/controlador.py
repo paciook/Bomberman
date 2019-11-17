@@ -14,14 +14,14 @@ class Controlador:
         # El controlador inicializa el juego
         # y la vista.
         self.dimensiones = (1260, 700)
-        self.juego = juego.Juego('Fede', self.dimensiones)
+        self.juego = juego.Juego('Fran', self.dimensiones)
         self.vista = vista.Vista(self.dimensiones, self.juego)
-        self.sleep = 0.005
+        # self.sleep = 0.005
 
-        self.vista.loadSprites()
+        # self.vista.loadSprites()
         self.vista.carga_imagen_fondo()
-        self.vista.cargar_imagen_bomberman([50, 50])
-        self.flipearAll()
+        # self.vista.cargar_imagen_bomberman([50, 50])
+        # self.flipearAll()
         self.main_loop()
 
     def main_loop(self):
@@ -47,32 +47,34 @@ class Controlador:
                         else:
                             print(str(event.key))
 
-            if len(self.juego.getBombas()) != 0:  # Hay bombas?
-                contador += 1
-                print(self.juego.getBombas()[0].getPosicion())
+            # if len(self.juego.getBombas()) != 0:  # Hay bombas?
+            #     contador += 1
+            #     print(self.juego.getBombas()[0].getPosicion())
 
-            if contador == 200:  # Hora de explotar
-                contador += 1
-                self.juego.explotarBomba()
+            # if contador == 200:  # Hora de explotar
+            #     contador += 1
+            #     self.juego.explotarBomba()
 
-            if contador == 300:  # Llegaron los bomberos
-                contador = 0
-                self.juego.apagarExplosion()
+            # if contador == 300:  # Llegaron los bomberos
+            #     contador = 0
+            #     self.juego.apagarExplosion()
 
-            if len(self.juego.getExplosiones()) != 0:  # No pasa nada
-                contador += 1
-            print(contador)
+            # if len(self.juego.getExplosiones()) != 0:  # No pasa nada
+            #     contador += 1
+            # print(contador)
+            self.vista.carga_imagen_fondo()
+            self.vista.dibujarObjetos()
+            self.juego.printearTiempo()
+            # self.flipearAll()
+            # time.sleep(self.sleep)
 
-            self.flipearAll()
-            time.sleep(self.sleep)
-
-    def flipearAll(self):  # Dibujamos la situacion actual
-        self.vista.recargarFondo()
-        self.vista.cargarBombas(self.juego.getBombas())
-        self.vista.cargarExplosiones(self.juego.getExplosiones())
-        self.vista.recargarThor()
-        self.vista.cargarMuros(self.juego.getMuros())
-        pygame.display.flip()
+    # def flipearAll(self):  # Dibujamos la situacion actual
+    #     self.vista.recargarFondo()
+    #     self.vista.cargarBombas(self.juego.getBombas())
+    #     self.vista.cargarExplosiones(self.juego.getExplosiones())
+    #     self.vista.recargarThor()
+    #     self.vista.cargarMuros(self.juego.getMuros())
+    #     pygame.display.flip()
 
 if __name__ == "__main__":
     controlador = Controlador()

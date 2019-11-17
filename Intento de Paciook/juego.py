@@ -1,10 +1,13 @@
 import controlador
-import intentodepacio
+import Thorman
 from explosiones import explosion
 from bomba import bomba
 from muro import muro
 import time
 from celda import celda
+import pygame
+from pygame.locals import *
+
 
 
 class Juego():
@@ -13,12 +16,16 @@ class Juego():
         self.nombre = nombre_jugador
         self.dimensiones = dimensiones
         self.iniciarArray()
-        self.thorman = intentodepacio.Thorman(self.nombre)
+        self.thorman = Thorman.Thorman(self.nombre)
+        
         self.objetosActivos = [self.thorman]
         self.bombasActivas = []
         self.muros = []
         self.serTrump()
         self.explosionesActivas = []
+
+        self.clock = pygame.time.Clock()
+        self.tiempoTrans = 0
 
     def moverThor(self, direccion):
         pos = list(self.thorman.getPosicion())
@@ -48,22 +55,23 @@ class Juego():
             pos = list(self.thorman.getPosicion())
             cel = self.equivalenteCelda(pos)
 
-            self.bombasActivas.append(cel[0].setContenido(bomba(cel[1])))
+            self.objetosActivos.append(cel[0].setContenido(bomba(cel[1])))
+            self.clock.tick()
+            
 
-    def getBombas(self):
-        return self.bombasActivas
 
     def explotarBomba(self):
-        pos = list(self.bombasActivas[0].getPosicion())
-        cel = self.equivalenteCelda(pos)
-
-        self.explosionesActivas.append(cel[0].setContenido(explosion(cel[1])))
+        # pos = list(self.bombasActivas[0].getPosicion())
+        # cel = self.equivalenteCelda(pos)
+# ACA HAY QUE METER MANO
+        # self.objetosActivos.append(cel[0].setContenido(explosion(cel[1])))
 
         # self.explosionesActivas.append(explosion(list(self.bombasActivas[0].getPosicion())))
-        self.bombasActivas.pop(0)
+        # self.bombasActivas.pop(0)
+        pass
 
-    def getMuros(self):
-        return self.muros
+    # def getMuros(self):
+    #     return self.muros
 
     def serTrump(self):
         aux = self.mapArray
@@ -72,29 +80,30 @@ class Juego():
                 if x == 0 or y == 0:
 
                     aux[x][y].setContenido(muro([x * 70, y * 70]))
-                    self.muros.append(aux[x][y].getContenido())
+                    self.objetosActivos.append(aux[x][y].getContenido())
                 elif x > 1 and y > 1 and x % 2 == 0 and y % 2 == 0:
 
                     aux[x][y].setContenido(muro([x * 70, y * 70]))
-                    self.muros.append(aux[x][y].getContenido())
+                    self.objetosActivos.append(aux[x][y].getContenido())
                 elif x == self.dimensiones[0]/70 - 1 or \
                         y == self.dimensiones[1]/70 - 1:
 
                     aux[x][y].setContenido(muro([x * 70, y * 70]))
-                    self.muros.append(aux[x][y].getContenido())
+                    self.objetosActivos.append(aux[x][y].getContenido())
 
         self.mapArray = aux
 
-    def getExplosiones(self):
-        return self.explosionesActivas
+    # def getExplosiones(self):
+    #     return self.explosionesActivas
 
     def apagarExplosion(self):
-        pos = list(self.explosionesActivas[0].getPosicion())
-        celdaActual = self.equivalenteCelda(pos)
+        # pos = list(self.explosionesActivas[0].getPosicion())
+        # celdaActual = self.equivalenteCelda(pos)
 
-        celdaActual[0].setContenido = None
+        # celdaActual[0].setContenido = None
 
-        self.explosionesActivas.pop(0)
+        # self.explosionesActivas.pop(0)
+        pass
 
     def getMapArray(self):
         return self.mapArray
@@ -102,8 +111,8 @@ class Juego():
     def setMapArray(self, mapArray):
         self.mapArray = mapArray
 
-    def appendMuro(self, muro):
-        self.muros.append(muro)
+    # def appendMuro(self, muro):
+    #     self.objetosActivos.append(muro)
 
     def equivalenteCelda(self, posicion):
 
@@ -123,3 +132,11 @@ class Juego():
             return True
         else:
             return False
+
+    def getObjetos(self):
+        return self.objetosActivos
+
+    def printearTiempo(self):
+        self.clock.tick()
+        self.tiempoTrans += self.clock.get_time()
+        print(self.tiempoTrans)

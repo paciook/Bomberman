@@ -1,5 +1,6 @@
 from thing import thing
-
+import pygame
 
 class muro(thing):
-    pass
+    def imagenInicial(self):
+        self.image = pygame.image.load('muro.png')

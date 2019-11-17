@@ -2,6 +2,8 @@ class thing:
     def __init__(self, position=[0, 0]):
         self.posicion = position
         self.hitbox = [0, 0]
+        self.image = "path/to/image"
+        self.imagenInicial()
 
     def getPosicion(self):
         return self.posicion
@@ -23,3 +25,9 @@ class thing:
 
     def getPosicion(self):
         return self.posicion
+
+    def getImage(self):
+        return self.image
+
+    def imagenInicial(self):
+        pass
